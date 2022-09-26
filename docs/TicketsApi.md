@@ -7,7 +7,9 @@ All URIs are relative to *https://api.merge.dev/api/ticketing/v1*
 | [**tickets_collaborators_list**](TicketsApi.md#tickets_collaborators_list) | **GET** /tickets/{id}/collaborators |  |
 | [**tickets_create**](TicketsApi.md#tickets_create) | **POST** /tickets |  |
 | [**tickets_list**](TicketsApi.md#tickets_list) | **GET** /tickets |  |
+| [**tickets_meta_patch_retrieve**](TicketsApi.md#tickets_meta_patch_retrieve) | **GET** /tickets/meta/patch/{id} |  |
 | [**tickets_meta_post_retrieve**](TicketsApi.md#tickets_meta_post_retrieve) | **GET** /tickets/meta/post |  |
+| [**tickets_partial_update**](TicketsApi.md#tickets_partial_update) | **PATCH** /tickets/{id} |  |
 | [**tickets_retrieve**](TicketsApi.md#tickets_retrieve) | **GET** /tickets/{id} |  |
 
 
@@ -272,6 +274,79 @@ end
 - **Accept**: application/json
 
 
+## tickets_meta_patch_retrieve
+
+> <MetaResponse> tickets_meta_patch_retrieve(x_account_token, id)
+
+
+
+Returns metadata for `Ticket` PATCHs.
+
+### Examples
+
+```ruby
+require 'time'
+require 'merge_ticketing_client'
+# setup authorization
+MergeTicketingClient.configure do |config|
+  # Configure API key authorization: tokenAuth
+  config.api_key['tokenAuth'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['tokenAuth'] = 'Bearer'
+end
+
+api_instance = MergeTicketingClient::TicketsApi.new
+x_account_token = 'x_account_token_example' # String | Token identifying the end user.
+id = TODO # String | 
+
+begin
+  
+  result = api_instance.tickets_meta_patch_retrieve(x_account_token, id)
+  p result
+rescue MergeTicketingClient::ApiError => e
+  puts "Error when calling TicketsApi->tickets_meta_patch_retrieve: #{e}"
+end
+```
+
+#### Using the tickets_meta_patch_retrieve_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<MetaResponse>, Integer, Hash)> tickets_meta_patch_retrieve_with_http_info(x_account_token, id)
+
+```ruby
+begin
+  
+  data, status_code, headers = api_instance.tickets_meta_patch_retrieve_with_http_info(x_account_token, id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <MetaResponse>
+rescue MergeTicketingClient::ApiError => e
+  puts "Error when calling TicketsApi->tickets_meta_patch_retrieve_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **x_account_token** | **String** | Token identifying the end user. |  |
+| **id** | [**String**](.md) |  |  |
+
+### Return type
+
+[**MetaResponse**](MetaResponse.md)
+
+### Authorization
+
+[tokenAuth](../README.md#tokenAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## tickets_meta_post_retrieve
 
 > <MetaResponse> tickets_meta_post_retrieve(x_account_token)
@@ -340,6 +415,85 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## tickets_partial_update
+
+> <TicketResponse> tickets_partial_update(x_account_token, id, patched_ticket_endpoint_request, opts)
+
+
+
+### Examples
+
+```ruby
+require 'time'
+require 'merge_ticketing_client'
+# setup authorization
+MergeTicketingClient.configure do |config|
+  # Configure API key authorization: tokenAuth
+  config.api_key['tokenAuth'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['tokenAuth'] = 'Bearer'
+end
+
+api_instance = MergeTicketingClient::TicketsApi.new
+x_account_token = 'x_account_token_example' # String | Token identifying the end user.
+id = TODO # String | 
+patched_ticket_endpoint_request = MergeTicketingClient::PatchedTicketEndpointRequest.new({model: MergeTicketingClient::PatchedTicketRequest.new}) # PatchedTicketEndpointRequest | 
+opts = {
+  is_debug_mode: true, # Boolean | Whether to include debug fields (such as log file links) in the response.
+  run_async: true # Boolean | Whether or not third-party updates should be run asynchronously.
+}
+
+begin
+  
+  result = api_instance.tickets_partial_update(x_account_token, id, patched_ticket_endpoint_request, opts)
+  p result
+rescue MergeTicketingClient::ApiError => e
+  puts "Error when calling TicketsApi->tickets_partial_update: #{e}"
+end
+```
+
+#### Using the tickets_partial_update_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TicketResponse>, Integer, Hash)> tickets_partial_update_with_http_info(x_account_token, id, patched_ticket_endpoint_request, opts)
+
+```ruby
+begin
+  
+  data, status_code, headers = api_instance.tickets_partial_update_with_http_info(x_account_token, id, patched_ticket_endpoint_request, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TicketResponse>
+rescue MergeTicketingClient::ApiError => e
+  puts "Error when calling TicketsApi->tickets_partial_update_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **x_account_token** | **String** | Token identifying the end user. |  |
+| **id** | [**String**](.md) |  |  |
+| **patched_ticket_endpoint_request** | [**PatchedTicketEndpointRequest**](PatchedTicketEndpointRequest.md) |  |  |
+| **is_debug_mode** | **Boolean** | Whether to include debug fields (such as log file links) in the response. | [optional] |
+| **run_async** | **Boolean** | Whether or not third-party updates should be run asynchronously. | [optional] |
+
+### Return type
+
+[**TicketResponse**](TicketResponse.md)
+
+### Authorization
+
+[tokenAuth](../README.md#tokenAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json, application/x-www-form-urlencoded, multipart/form-data
 - **Accept**: application/json
 
 

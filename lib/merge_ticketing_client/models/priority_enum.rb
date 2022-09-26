@@ -14,11 +14,11 @@ require 'date'
 require 'time'
 
 module MergeTicketingClient
-  class TicketStatusEnum
-    OPEN = "OPEN".freeze
-    CLOSED = "CLOSED".freeze
-    IN_PROGRESS = "IN_PROGRESS".freeze
-    ON_HOLD = "ON_HOLD".freeze
+  class PriorityEnum
+    URGENT = "URGENT".freeze
+    HIGH = "HIGH".freeze
+    NORMAL = "NORMAL".freeze
+    LOW = "LOW".freeze
 
     MERGE_NONSTANDARD_VALUE = "MERGE_NONSTANDARD_VALUE".freeze
 
@@ -30,7 +30,7 @@ module MergeTicketingClient
     # @return [String] The enum value
     def build_from_hash(value)
       @raw_value = value
-      if ["OPEN", "CLOSED", "IN_PROGRESS", "ON_HOLD", ].include? value
+      if ["URGENT", "HIGH", "NORMAL", "LOW", ].include? value
         @value = value
       else
         @value = MERGE_NONSTANDARD_VALUE

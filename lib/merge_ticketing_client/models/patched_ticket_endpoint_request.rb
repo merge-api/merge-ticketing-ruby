@@ -14,22 +14,13 @@ require 'date'
 require 'time'
 
 module MergeTicketingClient
-  class MetaResponse
-    attr_accessor :request_schema
-
-    attr_accessor :status
-
-    attr_accessor :has_conditional_params
-
-    attr_accessor :has_required_linked_account_params
+  class PatchedTicketEndpointRequest
+    attr_accessor :model
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'request_schema' => :'request_schema',
-        :'status' => :'status',
-        :'has_conditional_params' => :'has_conditional_params',
-        :'has_required_linked_account_params' => :'has_required_linked_account_params'
+        :'model' => :'model'
       }
     end
 
@@ -41,10 +32,7 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'request_schema' => :'Hash<String, Object>',
-        :'status' => :'LinkedAccountStatus',
-        :'has_conditional_params' => :'Boolean',
-        :'has_required_linked_account_params' => :'Boolean'
+        :'model' => :'PatchedTicketRequest'
       }
     end
 
@@ -58,33 +46,19 @@ module MergeTicketingClient
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::MetaResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::PatchedTicketEndpointRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::MetaResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::PatchedTicketEndpointRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'request_schema')
-        if (value = attributes[:'request_schema']).is_a?(Hash)
-          self.request_schema = value
-        end
-      end
-
-      if attributes.key?(:'status')
-        self.status = attributes[:'status']
-      end
-
-      if attributes.key?(:'has_conditional_params')
-        self.has_conditional_params = attributes[:'has_conditional_params']
-      end
-
-      if attributes.key?(:'has_required_linked_account_params')
-        self.has_required_linked_account_params = attributes[:'has_required_linked_account_params']
+      if attributes.key?(:'model')
+        self.model = attributes[:'model']
       end
     end
 
@@ -92,16 +66,8 @@ module MergeTicketingClient
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @request_schema.nil?
-        invalid_properties.push('invalid value for "request_schema", request_schema cannot be nil.')
-      end
-
-      if @has_conditional_params.nil?
-        invalid_properties.push('invalid value for "has_conditional_params", has_conditional_params cannot be nil.')
-      end
-
-      if @has_required_linked_account_params.nil?
-        invalid_properties.push('invalid value for "has_required_linked_account_params", has_required_linked_account_params cannot be nil.')
+      if @model.nil?
+        invalid_properties.push('invalid value for "model", model cannot be nil.')
       end
 
       invalid_properties
@@ -110,9 +76,7 @@ module MergeTicketingClient
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @request_schema.nil?
-      return false if @has_conditional_params.nil?
-      return false if @has_required_linked_account_params.nil?
+      return false if @model.nil?
       true
     end
 
@@ -121,10 +85,7 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          request_schema == o.request_schema &&
-          status == o.status &&
-          has_conditional_params == o.has_conditional_params &&
-          has_required_linked_account_params == o.has_required_linked_account_params
+          model == o.model
     end
 
     # @see the `==` method
@@ -136,7 +97,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [request_schema, status, has_conditional_params, has_required_linked_account_params].hash
+      [model].hash
     end
 
     # Builds the object from hash

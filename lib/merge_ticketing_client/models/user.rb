@@ -32,6 +32,9 @@ module MergeTicketingClient
 
     attr_accessor :teams
 
+    # The user's avatar picture.
+    attr_accessor :avatar
+
     attr_accessor :remote_data
 
     # Indicates whether or not this object has been deleted by third party webhooks.
@@ -46,6 +49,7 @@ module MergeTicketingClient
         :'email_address' => :'email_address',
         :'is_active' => :'is_active',
         :'teams' => :'teams',
+        :'avatar' => :'avatar',
         :'remote_data' => :'remote_data',
         :'remote_was_deleted' => :'remote_was_deleted'
       }
@@ -65,6 +69,7 @@ module MergeTicketingClient
         :'email_address' => :'String',
         :'is_active' => :'Boolean',
         :'teams' => :'Array<String>',
+        :'avatar' => :'String',
         :'remote_data' => :'Array<RemoteData>',
         :'remote_was_deleted' => :'Boolean'
       }
@@ -77,6 +82,7 @@ module MergeTicketingClient
         :'name',
         :'email_address',
         :'is_active',
+        :'avatar',
         :'remote_data',
       ])
     end
@@ -122,6 +128,10 @@ module MergeTicketingClient
         end
       end
 
+      if attributes.key?(:'avatar')
+        self.avatar = attributes[:'avatar']
+      end
+
       if attributes.key?(:'remote_data')
         if (value = attributes[:'remote_data']).is_a?(Array)
           self.remote_data = value
@@ -157,6 +167,7 @@ module MergeTicketingClient
           email_address == o.email_address &&
           is_active == o.is_active &&
           teams == o.teams &&
+          avatar == o.avatar &&
           remote_data == o.remote_data &&
           remote_was_deleted == o.remote_was_deleted
     end
@@ -170,7 +181,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, name, email_address, is_active, teams, remote_data, remote_was_deleted].hash
+      [id, remote_id, name, email_address, is_active, teams, avatar, remote_data, remote_was_deleted].hash
     end
 
     # Builds the object from hash
