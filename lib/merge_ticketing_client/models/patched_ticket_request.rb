@@ -14,22 +14,69 @@ require 'date'
 require 'time'
 
 module MergeTicketingClient
-  class MetaResponse
-    attr_accessor :request_schema
+  # # The Ticket Object ### Description The `Ticket` object is used to represent a ticket or a task within a system.  ### Usage Example TODO
+  class PatchedTicketRequest
+    # The ticket's name.
+    attr_accessor :name
 
+    attr_accessor :assignees
+
+    # The ticket's due date.
+    attr_accessor :due_date
+
+    # The current status of the ticket.
     attr_accessor :status
 
-    attr_accessor :has_conditional_params
+    # The ticket's description.
+    attr_accessor :description
 
-    attr_accessor :has_required_linked_account_params
+    attr_accessor :project
+
+    # The ticket's type.
+    attr_accessor :ticket_type
+
+    attr_accessor :account
+
+    attr_accessor :contact
+
+    attr_accessor :parent_ticket
+
+    attr_accessor :tags
+
+    # When the third party's ticket was created.
+    attr_accessor :remote_created_at
+
+    # When the third party's ticket was updated.
+    attr_accessor :remote_updated_at
+
+    # When the ticket was completed.
+    attr_accessor :completed_at
+
+    # The 3rd party url of the Ticket.
+    attr_accessor :ticket_url
+
+    # The priority or urgency of the Ticket. Possible values include: URGENT, HIGH, NORMAL, LOW - in cases where there is no clear mapping - the original value passed through.
+    attr_accessor :priority
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'request_schema' => :'request_schema',
+        :'name' => :'name',
+        :'assignees' => :'assignees',
+        :'due_date' => :'due_date',
         :'status' => :'status',
-        :'has_conditional_params' => :'has_conditional_params',
-        :'has_required_linked_account_params' => :'has_required_linked_account_params'
+        :'description' => :'description',
+        :'project' => :'project',
+        :'ticket_type' => :'ticket_type',
+        :'account' => :'account',
+        :'contact' => :'contact',
+        :'parent_ticket' => :'parent_ticket',
+        :'tags' => :'tags',
+        :'remote_created_at' => :'remote_created_at',
+        :'remote_updated_at' => :'remote_updated_at',
+        :'completed_at' => :'completed_at',
+        :'ticket_url' => :'ticket_url',
+        :'priority' => :'priority'
       }
     end
 
@@ -41,16 +88,42 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'request_schema' => :'Hash<String, Object>',
-        :'status' => :'LinkedAccountStatus',
-        :'has_conditional_params' => :'Boolean',
-        :'has_required_linked_account_params' => :'Boolean'
+        :'name' => :'String',
+        :'assignees' => :'Array<String>',
+        :'due_date' => :'Time',
+        :'status' => :'TicketStatusEnum',
+        :'description' => :'String',
+        :'project' => :'String',
+        :'ticket_type' => :'String',
+        :'account' => :'String',
+        :'contact' => :'String',
+        :'parent_ticket' => :'String',
+        :'tags' => :'Array<String>',
+        :'remote_created_at' => :'Time',
+        :'remote_updated_at' => :'Time',
+        :'completed_at' => :'Time',
+        :'ticket_url' => :'String',
+        :'priority' => :'PriorityEnum'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'name',
+        :'due_date',
+        :'status',
+        :'description',
+        :'project',
+        :'ticket_type',
+        :'account',
+        :'contact',
+        :'parent_ticket',
+        :'remote_created_at',
+        :'remote_updated_at',
+        :'completed_at',
+        :'ticket_url',
+        :'priority'
       ])
     end
 
@@ -58,33 +131,83 @@ module MergeTicketingClient
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::MetaResponse` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::PatchedTicketRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::MetaResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::PatchedTicketRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'request_schema')
-        if (value = attributes[:'request_schema']).is_a?(Hash)
-          self.request_schema = value
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
+      end
+
+      if attributes.key?(:'assignees')
+        if (value = attributes[:'assignees']).is_a?(Array)
+          self.assignees = value
         end
+      end
+
+      if attributes.key?(:'due_date')
+        self.due_date = attributes[:'due_date']
       end
 
       if attributes.key?(:'status')
         self.status = attributes[:'status']
       end
 
-      if attributes.key?(:'has_conditional_params')
-        self.has_conditional_params = attributes[:'has_conditional_params']
+      if attributes.key?(:'description')
+        self.description = attributes[:'description']
       end
 
-      if attributes.key?(:'has_required_linked_account_params')
-        self.has_required_linked_account_params = attributes[:'has_required_linked_account_params']
+      if attributes.key?(:'project')
+        self.project = attributes[:'project']
+      end
+
+      if attributes.key?(:'ticket_type')
+        self.ticket_type = attributes[:'ticket_type']
+      end
+
+      if attributes.key?(:'account')
+        self.account = attributes[:'account']
+      end
+
+      if attributes.key?(:'contact')
+        self.contact = attributes[:'contact']
+      end
+
+      if attributes.key?(:'parent_ticket')
+        self.parent_ticket = attributes[:'parent_ticket']
+      end
+
+      if attributes.key?(:'tags')
+        if (value = attributes[:'tags']).is_a?(Array)
+          self.tags = value
+        end
+      end
+
+      if attributes.key?(:'remote_created_at')
+        self.remote_created_at = attributes[:'remote_created_at']
+      end
+
+      if attributes.key?(:'remote_updated_at')
+        self.remote_updated_at = attributes[:'remote_updated_at']
+      end
+
+      if attributes.key?(:'completed_at')
+        self.completed_at = attributes[:'completed_at']
+      end
+
+      if attributes.key?(:'ticket_url')
+        self.ticket_url = attributes[:'ticket_url']
+      end
+
+      if attributes.key?(:'priority')
+        self.priority = attributes[:'priority']
       end
     end
 
@@ -92,16 +215,8 @@ module MergeTicketingClient
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
-      if @request_schema.nil?
-        invalid_properties.push('invalid value for "request_schema", request_schema cannot be nil.')
-      end
-
-      if @has_conditional_params.nil?
-        invalid_properties.push('invalid value for "has_conditional_params", has_conditional_params cannot be nil.')
-      end
-
-      if @has_required_linked_account_params.nil?
-        invalid_properties.push('invalid value for "has_required_linked_account_params", has_required_linked_account_params cannot be nil.')
+      if !@ticket_url.nil? && @ticket_url.to_s.length > 2000
+        invalid_properties.push('invalid value for "ticket_url", the character length must be smaller than or equal to 2000.')
       end
 
       invalid_properties
@@ -110,10 +225,18 @@ module MergeTicketingClient
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
-      return false if @request_schema.nil?
-      return false if @has_conditional_params.nil?
-      return false if @has_required_linked_account_params.nil?
+      return false if !@ticket_url.nil? && @ticket_url.to_s.length > 2000
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] ticket_url Value to be assigned
+    def ticket_url=(ticket_url)
+      if !ticket_url.nil? && ticket_url.to_s.length > 2000
+        fail ArgumentError, 'invalid value for "ticket_url", the character length must be smaller than or equal to 2000.'
+      end
+
+      @ticket_url = ticket_url
     end
 
     # Checks equality by comparing each attribute.
@@ -121,10 +244,22 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          request_schema == o.request_schema &&
+          name == o.name &&
+          assignees == o.assignees &&
+          due_date == o.due_date &&
           status == o.status &&
-          has_conditional_params == o.has_conditional_params &&
-          has_required_linked_account_params == o.has_required_linked_account_params
+          description == o.description &&
+          project == o.project &&
+          ticket_type == o.ticket_type &&
+          account == o.account &&
+          contact == o.contact &&
+          parent_ticket == o.parent_ticket &&
+          tags == o.tags &&
+          remote_created_at == o.remote_created_at &&
+          remote_updated_at == o.remote_updated_at &&
+          completed_at == o.completed_at &&
+          ticket_url == o.ticket_url &&
+          priority == o.priority
     end
 
     # @see the `==` method
@@ -136,7 +271,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [request_schema, status, has_conditional_params, has_required_linked_account_params].hash
+      [name, assignees, due_date, status, description, project, ticket_type, account, contact, parent_ticket, tags, remote_created_at, remote_updated_at, completed_at, ticket_url, priority].hash
     end
 
     # Builds the object from hash

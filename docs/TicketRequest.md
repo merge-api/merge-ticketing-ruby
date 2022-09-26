@@ -19,6 +19,9 @@
 | **tags** | **Array&lt;String&gt;** |  | [optional] |
 | **remote_created_at** | **Time** | When the third party&#39;s ticket was created. | [optional] |
 | **remote_updated_at** | **Time** | When the third party&#39;s ticket was updated. | [optional] |
+| **completed_at** | **Time** | When the ticket was completed. | [optional] |
+| **ticket_url** | **String** | The 3rd party url of the Ticket. | [optional] |
+| **priority** | [**PriorityEnum**](PriorityEnum.md) | The priority or urgency of the Ticket. Possible values include: URGENT, HIGH, NORMAL, LOW - in cases where there is no clear mapping - the original value passed through. | [optional] |
 
 ## Example
 
@@ -40,7 +43,10 @@ instance = MergeTicketingClient::TicketRequest.new(
   attachments: [&quot;42747df1-95e7-46e2-93cc-66f1191edca5&quot;,&quot;92f972d0-2526-434b-9409-4c3b468e08f0&quot;],
   tags: [&quot;enterprise&quot;,&quot;other-tag&quot;],
   remote_created_at: 2021-11-10T00:00Z,
-  remote_updated_at: 2021-12-09T00:00Z
+  remote_updated_at: 2021-12-09T00:00Z,
+  completed_at: 2021-12-09T00:00Z,
+  ticket_url: https://thirdpartysoftware.com/project/3/issue/1,
+  priority: HIGH
 )
 ```
 

@@ -86,12 +86,38 @@ describe 'TicketsApi' do
     end
   end
 
+  # unit tests for tickets_meta_patch_retrieve
+  # Returns metadata for &#x60;Ticket&#x60; PATCHs.
+  # @param x_account_token Token identifying the end user.
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @return [MetaResponse]
+  describe 'tickets_meta_patch_retrieve test' do
+    it 'should work' do
+      # assertion here. ref: https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
+    end
+  end
+
   # unit tests for tickets_meta_post_retrieve
   # Returns metadata for &#x60;Ticket&#x60; POSTs.
   # @param x_account_token Token identifying the end user.
   # @param [Hash] opts the optional parameters
   # @return [MetaResponse]
   describe 'tickets_meta_post_retrieve test' do
+    it 'should work' do
+      # assertion here. ref: https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
+    end
+  end
+
+  # unit tests for tickets_partial_update
+  # @param x_account_token Token identifying the end user.
+  # @param id 
+  # @param patched_ticket_endpoint_request 
+  # @param [Hash] opts the optional parameters
+  # @option opts [Boolean] :is_debug_mode Whether to include debug fields (such as log file links) in the response.
+  # @option opts [Boolean] :run_async Whether or not third-party updates should be run asynchronously.
+  # @return [TicketResponse]
+  describe 'tickets_partial_update test' do
     it 'should work' do
       # assertion here. ref: https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
     end

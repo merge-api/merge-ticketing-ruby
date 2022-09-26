@@ -54,6 +54,15 @@ module MergeTicketingClient
     # When the third party's ticket was updated.
     attr_accessor :remote_updated_at
 
+    # When the ticket was completed.
+    attr_accessor :completed_at
+
+    # The 3rd party url of the Ticket.
+    attr_accessor :ticket_url
+
+    # The priority or urgency of the Ticket. Possible values include: URGENT, HIGH, NORMAL, LOW - in cases where there is no clear mapping - the original value passed through.
+    attr_accessor :priority
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -71,7 +80,10 @@ module MergeTicketingClient
         :'attachments' => :'attachments',
         :'tags' => :'tags',
         :'remote_created_at' => :'remote_created_at',
-        :'remote_updated_at' => :'remote_updated_at'
+        :'remote_updated_at' => :'remote_updated_at',
+        :'completed_at' => :'completed_at',
+        :'ticket_url' => :'ticket_url',
+        :'priority' => :'priority'
       }
     end
 
@@ -97,7 +109,10 @@ module MergeTicketingClient
         :'attachments' => :'Array<String>',
         :'tags' => :'Array<String>',
         :'remote_created_at' => :'Time',
-        :'remote_updated_at' => :'Time'
+        :'remote_updated_at' => :'Time',
+        :'completed_at' => :'Time',
+        :'ticket_url' => :'String',
+        :'priority' => :'PriorityEnum'
       }
     end
 
@@ -115,7 +130,10 @@ module MergeTicketingClient
         :'contact',
         :'parent_ticket',
         :'remote_created_at',
-        :'remote_updated_at'
+        :'remote_updated_at',
+        :'completed_at',
+        :'ticket_url',
+        :'priority'
       ])
     end
 
@@ -199,19 +217,46 @@ module MergeTicketingClient
       if attributes.key?(:'remote_updated_at')
         self.remote_updated_at = attributes[:'remote_updated_at']
       end
+
+      if attributes.key?(:'completed_at')
+        self.completed_at = attributes[:'completed_at']
+      end
+
+      if attributes.key?(:'ticket_url')
+        self.ticket_url = attributes[:'ticket_url']
+      end
+
+      if attributes.key?(:'priority')
+        self.priority = attributes[:'priority']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if !@ticket_url.nil? && @ticket_url.to_s.length > 2000
+        invalid_properties.push('invalid value for "ticket_url", the character length must be smaller than or equal to 2000.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      return false if !@ticket_url.nil? && @ticket_url.to_s.length > 2000
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] ticket_url Value to be assigned
+    def ticket_url=(ticket_url)
+      if !ticket_url.nil? && ticket_url.to_s.length > 2000
+        fail ArgumentError, 'invalid value for "ticket_url", the character length must be smaller than or equal to 2000.'
+      end
+
+      @ticket_url = ticket_url
     end
 
     # Checks equality by comparing each attribute.
@@ -233,7 +278,10 @@ module MergeTicketingClient
           attachments == o.attachments &&
           tags == o.tags &&
           remote_created_at == o.remote_created_at &&
-          remote_updated_at == o.remote_updated_at
+          remote_updated_at == o.remote_updated_at &&
+          completed_at == o.completed_at &&
+          ticket_url == o.ticket_url &&
+          priority == o.priority
     end
 
     # @see the `==` method
@@ -245,7 +293,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [remote_id, name, assignees, due_date, status, description, project, ticket_type, account, contact, parent_ticket, attachments, tags, remote_created_at, remote_updated_at].hash
+      [remote_id, name, assignees, due_date, status, description, project, ticket_type, account, contact, parent_ticket, attachments, tags, remote_created_at, remote_updated_at, completed_at, ticket_url, priority].hash
     end
 
     # Builds the object from hash

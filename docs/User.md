@@ -10,6 +10,7 @@
 | **email_address** | **String** | The user&#39;s email address. | [optional] |
 | **is_active** | **Boolean** | Whether or not the user is active. | [optional] |
 | **teams** | **Array&lt;String&gt;** |  | [optional] |
+| **avatar** | **String** | The user&#39;s avatar picture. | [optional] |
 | **remote_data** | [**Array&lt;RemoteData&gt;**](RemoteData.md) |  | [optional][readonly] |
 | **remote_was_deleted** | **Boolean** | Indicates whether or not this object has been deleted by third party webhooks. | [optional][readonly] |
 
@@ -25,6 +26,7 @@ instance = MergeTicketingClient::User.new(
   email_address: help@merge.dev,
   is_active: true,
   teams: [&quot;28b54125-287f-494d-965e-3c5b330c9a68&quot;,&quot;17a54124-287f-494d-965e-3c5b330c9a68&quot;],
+  avatar: https://merge.dev/user_profile_pic.png,
   remote_data: null,
   remote_was_deleted: null
 )
