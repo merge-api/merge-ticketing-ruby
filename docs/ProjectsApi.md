@@ -6,7 +6,7 @@ All URIs are relative to *https://api.merge.dev/api/ticketing/v1*
 | ------ | ------------ | ----------- |
 | [**projects_list**](ProjectsApi.md#projects_list) | **GET** /projects |  |
 | [**projects_retrieve**](ProjectsApi.md#projects_retrieve) | **GET** /projects/{id} |  |
-| [**projects_users_list**](ProjectsApi.md#projects_users_list) | **GET** /projects/{id}/users |  |
+| [**projects_users_list**](ProjectsApi.md#projects_users_list) | **GET** /projects/{parent_id}/users |  |
 
 
 ## projects_list
@@ -179,11 +179,11 @@ end
 
 ## projects_users_list
 
-> <PaginatedUserList> projects_users_list(x_account_token, id, opts)
+> <PaginatedUserList> projects_users_list(x_account_token, parent_id, opts)
 
 
 
-Returns a `User` object with the given `id`.
+Returns a list of `User` objects.
 
 ### Examples
 
@@ -200,17 +200,18 @@ end
 
 api_instance = MergeTicketingClient::ProjectsApi.new
 x_account_token = 'x_account_token_example' # String | Token identifying the end user.
-id = TODO # String | 
+parent_id = TODO # String | 
 opts = {
   cursor: 'cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw', # String | The pagination cursor value.
   expand: 'teams', # String | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+  include_deleted_data: true, # Boolean | Whether to include data that was marked as deleted by third party webhooks.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
   page_size: 56 # Integer | Number of results to return per page.
 }
 
 begin
   
-  result = api_instance.projects_users_list(x_account_token, id, opts)
+  result = api_instance.projects_users_list(x_account_token, parent_id, opts)
   p result
 rescue MergeTicketingClient::ApiError => e
   puts "Error when calling ProjectsApi->projects_users_list: #{e}"
@@ -221,12 +222,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PaginatedUserList>, Integer, Hash)> projects_users_list_with_http_info(x_account_token, id, opts)
+> <Array(<PaginatedUserList>, Integer, Hash)> projects_users_list_with_http_info(x_account_token, parent_id, opts)
 
 ```ruby
 begin
   
-  data, status_code, headers = api_instance.projects_users_list_with_http_info(x_account_token, id, opts)
+  data, status_code, headers = api_instance.projects_users_list_with_http_info(x_account_token, parent_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PaginatedUserList>
@@ -240,9 +241,10 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **x_account_token** | **String** | Token identifying the end user. |  |
-| **id** | [**String**](.md) |  |  |
+| **parent_id** | [**String**](.md) |  |  |
 | **cursor** | **String** | The pagination cursor value. | [optional] |
 | **expand** | **String** | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces. | [optional] |
+| **include_deleted_data** | **Boolean** | Whether to include data that was marked as deleted by third party webhooks. | [optional] |
 | **include_remote_data** | **Boolean** | Whether to include the original data Merge fetched from the third-party to produce these models. | [optional] |
 | **page_size** | **Integer** | Number of results to return per page. | [optional] |
 

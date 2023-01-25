@@ -19,8 +19,10 @@ module MergeTicketingClient
     # The third-party API ID of the matching object.
     attr_accessor :remote_id
 
+    # The author of the Comment, if the author is a User.
     attr_accessor :user
 
+    # The author of the Comment, if the author is a Contact.
     attr_accessor :contact
 
     # The comment's text body.
@@ -29,6 +31,7 @@ module MergeTicketingClient
     # The comment's text body formatted as html.
     attr_accessor :html_body
 
+    # The ticket associated with the comment. 
     attr_accessor :ticket
 
     # Whether or not the comment is internal.
@@ -36,6 +39,10 @@ module MergeTicketingClient
 
     # When the third party's comment was created.
     attr_accessor :remote_created_at
+
+    attr_accessor :integration_params
+
+    attr_accessor :linked_account_params
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -47,7 +54,9 @@ module MergeTicketingClient
         :'html_body' => :'html_body',
         :'ticket' => :'ticket',
         :'is_private' => :'is_private',
-        :'remote_created_at' => :'remote_created_at'
+        :'remote_created_at' => :'remote_created_at',
+        :'integration_params' => :'integration_params',
+        :'linked_account_params' => :'linked_account_params'
       }
     end
 
@@ -66,7 +75,9 @@ module MergeTicketingClient
         :'html_body' => :'String',
         :'ticket' => :'String',
         :'is_private' => :'Boolean',
-        :'remote_created_at' => :'Time'
+        :'remote_created_at' => :'Time',
+        :'integration_params' => :'Hash<String, Object>',
+        :'linked_account_params' => :'Hash<String, Object>'
       }
     end
 
@@ -80,7 +91,9 @@ module MergeTicketingClient
         :'html_body',
         :'ticket',
         :'is_private',
-        :'remote_created_at'
+        :'remote_created_at',
+        :'integration_params',
+        :'linked_account_params'
       ])
     end
 
@@ -130,6 +143,18 @@ module MergeTicketingClient
       if attributes.key?(:'remote_created_at')
         self.remote_created_at = attributes[:'remote_created_at']
       end
+
+      if attributes.key?(:'integration_params')
+        if (value = attributes[:'integration_params']).is_a?(Hash)
+          self.integration_params = value
+        end
+      end
+
+      if attributes.key?(:'linked_account_params')
+        if (value = attributes[:'linked_account_params']).is_a?(Hash)
+          self.linked_account_params = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -157,7 +182,9 @@ module MergeTicketingClient
           html_body == o.html_body &&
           ticket == o.ticket &&
           is_private == o.is_private &&
-          remote_created_at == o.remote_created_at
+          remote_created_at == o.remote_created_at &&
+          integration_params == o.integration_params &&
+          linked_account_params == o.linked_account_params
     end
 
     # @see the `==` method
@@ -169,7 +196,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [remote_id, user, contact, body, html_body, ticket, is_private, remote_created_at].hash
+      [remote_id, user, contact, body, html_body, ticket, is_private, remote_created_at, integration_params, linked_account_params].hash
     end
 
     # Builds the object from hash

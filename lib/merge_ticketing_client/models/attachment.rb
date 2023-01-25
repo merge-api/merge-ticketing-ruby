@@ -24,6 +24,7 @@ module MergeTicketingClient
     # The attachment's name.
     attr_accessor :file_name
 
+    # The ticket associated with the attachment.
     attr_accessor :ticket
 
     # The attachment's url.
@@ -32,6 +33,7 @@ module MergeTicketingClient
     # The attachment's file format.
     attr_accessor :content_type
 
+    # The user who uploaded the attachment.
     attr_accessor :uploaded_by
 
     # When the third party's attachment was created.
@@ -40,6 +42,8 @@ module MergeTicketingClient
     attr_accessor :remote_data
 
     attr_accessor :remote_was_deleted
+
+    attr_accessor :field_mappings
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -53,7 +57,8 @@ module MergeTicketingClient
         :'uploaded_by' => :'uploaded_by',
         :'remote_created_at' => :'remote_created_at',
         :'remote_data' => :'remote_data',
-        :'remote_was_deleted' => :'remote_was_deleted'
+        :'remote_was_deleted' => :'remote_was_deleted',
+        :'field_mappings' => :'field_mappings'
       }
     end
 
@@ -74,7 +79,8 @@ module MergeTicketingClient
         :'uploaded_by' => :'String',
         :'remote_created_at' => :'Time',
         :'remote_data' => :'Array<RemoteData>',
-        :'remote_was_deleted' => :'Boolean'
+        :'remote_was_deleted' => :'Boolean',
+        :'field_mappings' => :'Hash<String, Object>'
       }
     end
 
@@ -89,6 +95,7 @@ module MergeTicketingClient
         :'uploaded_by',
         :'remote_created_at',
         :'remote_data',
+        :'field_mappings'
       ])
     end
 
@@ -148,6 +155,12 @@ module MergeTicketingClient
       if attributes.key?(:'remote_was_deleted')
         self.remote_was_deleted = attributes[:'remote_was_deleted']
       end
+
+      if attributes.key?(:'field_mappings')
+        if (value = attributes[:'field_mappings']).is_a?(Hash)
+          self.field_mappings = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -177,7 +190,8 @@ module MergeTicketingClient
           uploaded_by == o.uploaded_by &&
           remote_created_at == o.remote_created_at &&
           remote_data == o.remote_data &&
-          remote_was_deleted == o.remote_was_deleted
+          remote_was_deleted == o.remote_was_deleted &&
+          field_mappings == o.field_mappings
     end
 
     # @see the `==` method
@@ -189,7 +203,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, file_name, ticket, file_url, content_type, uploaded_by, remote_created_at, remote_data, remote_was_deleted].hash
+      [id, remote_id, file_name, ticket, file_url, content_type, uploaded_by, remote_created_at, remote_data, remote_was_deleted, field_mappings].hash
     end
 
     # Builds the object from hash

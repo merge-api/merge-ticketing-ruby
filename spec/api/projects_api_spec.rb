@@ -66,12 +66,13 @@ describe 'ProjectsApi' do
   end
 
   # unit tests for projects_users_list
-  # Returns a &#x60;User&#x60; object with the given &#x60;id&#x60;.
+  # Returns a list of &#x60;User&#x60; objects.
   # @param x_account_token Token identifying the end user.
-  # @param id 
+  # @param parent_id 
   # @param [Hash] opts the optional parameters
   # @option opts [String] :cursor The pagination cursor value.
   # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+  # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
   # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
   # @option opts [Integer] :page_size Number of results to return per page.
   # @return [PaginatedUserList]

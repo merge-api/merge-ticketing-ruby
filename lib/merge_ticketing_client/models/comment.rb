@@ -21,8 +21,10 @@ module MergeTicketingClient
     # The third-party API ID of the matching object.
     attr_accessor :remote_id
 
+    # The author of the Comment, if the author is a User.
     attr_accessor :user
 
+    # The author of the Comment, if the author is a Contact.
     attr_accessor :contact
 
     # The comment's text body.
@@ -31,6 +33,7 @@ module MergeTicketingClient
     # The comment's text body formatted as html.
     attr_accessor :html_body
 
+    # The ticket associated with the comment. 
     attr_accessor :ticket
 
     # Whether or not the comment is internal.
@@ -42,6 +45,8 @@ module MergeTicketingClient
     attr_accessor :remote_data
 
     attr_accessor :remote_was_deleted
+
+    attr_accessor :field_mappings
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -56,7 +61,8 @@ module MergeTicketingClient
         :'is_private' => :'is_private',
         :'remote_created_at' => :'remote_created_at',
         :'remote_data' => :'remote_data',
-        :'remote_was_deleted' => :'remote_was_deleted'
+        :'remote_was_deleted' => :'remote_was_deleted',
+        :'field_mappings' => :'field_mappings'
       }
     end
 
@@ -78,7 +84,8 @@ module MergeTicketingClient
         :'is_private' => :'Boolean',
         :'remote_created_at' => :'Time',
         :'remote_data' => :'Array<RemoteData>',
-        :'remote_was_deleted' => :'Boolean'
+        :'remote_was_deleted' => :'Boolean',
+        :'field_mappings' => :'Hash<String, Object>'
       }
     end
 
@@ -94,6 +101,7 @@ module MergeTicketingClient
         :'is_private',
         :'remote_created_at',
         :'remote_data',
+        :'field_mappings'
       ])
     end
 
@@ -157,6 +165,12 @@ module MergeTicketingClient
       if attributes.key?(:'remote_was_deleted')
         self.remote_was_deleted = attributes[:'remote_was_deleted']
       end
+
+      if attributes.key?(:'field_mappings')
+        if (value = attributes[:'field_mappings']).is_a?(Hash)
+          self.field_mappings = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -187,7 +201,8 @@ module MergeTicketingClient
           is_private == o.is_private &&
           remote_created_at == o.remote_created_at &&
           remote_data == o.remote_data &&
-          remote_was_deleted == o.remote_was_deleted
+          remote_was_deleted == o.remote_was_deleted &&
+          field_mappings == o.field_mappings
     end
 
     # @see the `==` method
@@ -199,7 +214,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, user, contact, body, html_body, ticket, is_private, remote_created_at, remote_data, remote_was_deleted].hash
+      [id, remote_id, user, contact, body, html_body, ticket, is_private, remote_created_at, remote_data, remote_was_deleted, field_mappings].hash
     end
 
     # Builds the object from hash
