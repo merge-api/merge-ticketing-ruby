@@ -25,4 +25,28 @@ describe MergeTicketingClient::MethodEnum do
       expect(instance).to be_instance_of(MergeTicketingClient::MethodEnum)
     end
   end
+
+  describe '#build_from_hash' do
+    context 'value is a standard value' do
+      let(:standard_values) { %w[GET OPTIONS HEAD POST PUT PATCH DELETE] }
+
+      it 'sets the raw_value and the value for the instance to be the value passed in' do
+        standard_values.each do |value|
+          instance.build_from_hash(value)
+          expect(instance.raw_value).to eq(value)
+          expect(instance.value).to eq(value)
+        end
+      end
+    end
+
+    context 'value is not a standard value' do
+      let(:nonstandard_value) { "something else" }
+
+      it 'sets the raw_value for the instance to be the value passed in, but casts its value to be marked as nonstandard' do
+        instance.build_from_hash(nonstandard_value)
+        expect(instance.raw_value).to eq(nonstandard_value)
+        expect(instance.value).to eq("MERGE_NONSTANDARD_VALUE")
+      end
+    end
+  end
 end
