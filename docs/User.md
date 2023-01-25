@@ -13,6 +13,7 @@
 | **avatar** | **String** | The user&#39;s avatar picture. | [optional] |
 | **remote_data** | [**Array&lt;RemoteData&gt;**](RemoteData.md) |  | [optional][readonly] |
 | **remote_was_deleted** | **Boolean** | Indicates whether or not this object has been deleted by third party webhooks. | [optional][readonly] |
+| **field_mappings** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional][readonly] |
 
 ## Example
 
@@ -28,7 +29,8 @@ instance = MergeTicketingClient::User.new(
   teams: [&quot;28b54125-287f-494d-965e-3c5b330c9a68&quot;,&quot;17a54124-287f-494d-965e-3c5b330c9a68&quot;],
   avatar: https://merge.dev/user_profile_pic.png,
   remote_data: null,
-  remote_was_deleted: null
+  remote_was_deleted: null,
+  field_mappings: {&quot;organization_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;},&quot;linked_account_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;}}
 )
 ```
 

@@ -60,7 +60,7 @@ module MergeTicketingClient
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: LinkedAccountsApi.linked_accounts_list ...'
       end
-      allowable_values = ["accounting", "ats", "crm", "hris", "ticketing"]
+      allowable_values = ["accounting", "ats", "crm", "hris", "mktg", "ticketing"]
       if @api_client.config.client_side_validation && opts[:'category'] && !allowable_values.include?(opts[:'category'])
         fail ArgumentError, "invalid value for \"category\", must be one of #{allowable_values}"
       end

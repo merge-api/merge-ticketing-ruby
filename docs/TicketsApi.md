@@ -4,7 +4,7 @@ All URIs are relative to *https://api.merge.dev/api/ticketing/v1*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**tickets_collaborators_list**](TicketsApi.md#tickets_collaborators_list) | **GET** /tickets/{id}/collaborators |  |
+| [**tickets_collaborators_list**](TicketsApi.md#tickets_collaborators_list) | **GET** /tickets/{parent_id}/collaborators |  |
 | [**tickets_create**](TicketsApi.md#tickets_create) | **POST** /tickets |  |
 | [**tickets_list**](TicketsApi.md#tickets_list) | **GET** /tickets |  |
 | [**tickets_meta_patch_retrieve**](TicketsApi.md#tickets_meta_patch_retrieve) | **GET** /tickets/meta/patch/{id} |  |
@@ -15,11 +15,11 @@ All URIs are relative to *https://api.merge.dev/api/ticketing/v1*
 
 ## tickets_collaborators_list
 
-> <PaginatedUserList> tickets_collaborators_list(x_account_token, id, opts)
+> <PaginatedUserList> tickets_collaborators_list(x_account_token, parent_id, opts)
 
 
 
-Returns a `User` object with the given `id`.
+Returns a list of `User` objects.
 
 ### Examples
 
@@ -36,17 +36,18 @@ end
 
 api_instance = MergeTicketingClient::TicketsApi.new
 x_account_token = 'x_account_token_example' # String | Token identifying the end user.
-id = TODO # String | 
+parent_id = TODO # String | 
 opts = {
   cursor: 'cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw', # String | The pagination cursor value.
   expand: 'teams', # String | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+  include_deleted_data: true, # Boolean | Whether to include data that was marked as deleted by third party webhooks.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
   page_size: 56 # Integer | Number of results to return per page.
 }
 
 begin
   
-  result = api_instance.tickets_collaborators_list(x_account_token, id, opts)
+  result = api_instance.tickets_collaborators_list(x_account_token, parent_id, opts)
   p result
 rescue MergeTicketingClient::ApiError => e
   puts "Error when calling TicketsApi->tickets_collaborators_list: #{e}"
@@ -57,12 +58,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<PaginatedUserList>, Integer, Hash)> tickets_collaborators_list_with_http_info(x_account_token, id, opts)
+> <Array(<PaginatedUserList>, Integer, Hash)> tickets_collaborators_list_with_http_info(x_account_token, parent_id, opts)
 
 ```ruby
 begin
   
-  data, status_code, headers = api_instance.tickets_collaborators_list_with_http_info(x_account_token, id, opts)
+  data, status_code, headers = api_instance.tickets_collaborators_list_with_http_info(x_account_token, parent_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <PaginatedUserList>
@@ -76,9 +77,10 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **x_account_token** | **String** | Token identifying the end user. |  |
-| **id** | [**String**](.md) |  |  |
+| **parent_id** | [**String**](.md) |  |  |
 | **cursor** | **String** | The pagination cursor value. | [optional] |
 | **expand** | **String** | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces. | [optional] |
+| **include_deleted_data** | **Boolean** | Whether to include data that was marked as deleted by third party webhooks. | [optional] |
 | **include_remote_data** | **Boolean** | Whether to include the original data Merge fetched from the third-party to produce these models. | [optional] |
 | **page_size** | **Integer** | Number of results to return per page. | [optional] |
 
@@ -200,18 +202,35 @@ api_instance = MergeTicketingClient::TicketsApi.new
 x_account_token = 'x_account_token_example' # String | Token identifying the end user.
 opts = {
   account_id: 'account_id_example', # String | If provided, will only return tickets for this account.
+  assignee_ids: 'assignee_ids_example', # String | If provided, will only return tickets assigned to the assignee_ids; multiple assignee_ids can be separated by commas.
+  collection_ids: 'collection_ids_example', # String | If provided, will only return tickets assigned to the collection_ids; multiple collection_ids can be separated by commas.
+  completed_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets completed after this datetime.
+  completed_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets completed before this datetime.
+  contact_id: 'contact_id_example', # String | If provided, will only return tickets for this contact.
   created_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects created after this datetime.
   created_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects created before this datetime.
   cursor: 'cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw', # String | The pagination cursor value.
+  due_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets due after this datetime.
+  due_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets due before this datetime.
   expand: 'account', # String | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   include_deleted_data: true, # Boolean | Whether to include data that was marked as deleted by third party webhooks.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
   modified_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects modified after this datetime.
   modified_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects modified before this datetime.
   page_size: 56, # Integer | Number of results to return per page.
+  parent_ticket_id: 'parent_ticket_id_example', # String | If provided, will only return sub tickets of the parent_ticket_id.
+  priority: 'HIGH', # String | If provided, will only return tickets of this priority.
   project_id: 'project_id_example', # String | If provided, will only return tickets for this project.
-  remote_fields: 'status', # String | Which fields should be returned in non-normalized form.
-  remote_id: 'remote_id_example' # String | The API provider's ID for the given object.
+  remote_created_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets created in the third party platform after this datetime.
+  remote_created_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets created in the third party platform before this datetime.
+  remote_fields: 'priority', # String | Deprecated. Use show_enum_origins.
+  remote_id: 'remote_id_example', # String | The API provider's ID for the given object.
+  remote_updated_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets updated in the third party platform after this datetime.
+  remote_updated_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets updated in the third party platform before this datetime.
+  show_enum_origins: 'priority', # String | Which fields should be returned in non-normalized form.
+  status: 'CLOSED', # String | If provided, will only return tickets of this status.
+  tags: 'tags_example', # String | If provided, will only return tickets matching the tags; multiple tags can be separated by commas.
+  ticket_type: 'ticket_type_example' # String | If provided, will only return tickets of this type.
 }
 
 begin
@@ -247,18 +266,35 @@ end
 | ---- | ---- | ----------- | ----- |
 | **x_account_token** | **String** | Token identifying the end user. |  |
 | **account_id** | **String** | If provided, will only return tickets for this account. | [optional] |
+| **assignee_ids** | **String** | If provided, will only return tickets assigned to the assignee_ids; multiple assignee_ids can be separated by commas. | [optional] |
+| **collection_ids** | **String** | If provided, will only return tickets assigned to the collection_ids; multiple collection_ids can be separated by commas. | [optional] |
+| **completed_after** | **Time** | If provided, will only return tickets completed after this datetime. | [optional] |
+| **completed_before** | **Time** | If provided, will only return tickets completed before this datetime. | [optional] |
+| **contact_id** | **String** | If provided, will only return tickets for this contact. | [optional] |
 | **created_after** | **Time** | If provided, will only return objects created after this datetime. | [optional] |
 | **created_before** | **Time** | If provided, will only return objects created before this datetime. | [optional] |
 | **cursor** | **String** | The pagination cursor value. | [optional] |
+| **due_after** | **Time** | If provided, will only return tickets due after this datetime. | [optional] |
+| **due_before** | **Time** | If provided, will only return tickets due before this datetime. | [optional] |
 | **expand** | **String** | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces. | [optional] |
 | **include_deleted_data** | **Boolean** | Whether to include data that was marked as deleted by third party webhooks. | [optional] |
 | **include_remote_data** | **Boolean** | Whether to include the original data Merge fetched from the third-party to produce these models. | [optional] |
 | **modified_after** | **Time** | If provided, will only return objects modified after this datetime. | [optional] |
 | **modified_before** | **Time** | If provided, will only return objects modified before this datetime. | [optional] |
 | **page_size** | **Integer** | Number of results to return per page. | [optional] |
+| **parent_ticket_id** | **String** | If provided, will only return sub tickets of the parent_ticket_id. | [optional] |
+| **priority** | **String** | If provided, will only return tickets of this priority. | [optional] |
 | **project_id** | **String** | If provided, will only return tickets for this project. | [optional] |
-| **remote_fields** | **String** | Which fields should be returned in non-normalized form. | [optional] |
+| **remote_created_after** | **Time** | If provided, will only return tickets created in the third party platform after this datetime. | [optional] |
+| **remote_created_before** | **Time** | If provided, will only return tickets created in the third party platform before this datetime. | [optional] |
+| **remote_fields** | **String** | Deprecated. Use show_enum_origins. | [optional] |
 | **remote_id** | **String** | The API provider&#39;s ID for the given object. | [optional] |
+| **remote_updated_after** | **Time** | If provided, will only return tickets updated in the third party platform after this datetime. | [optional] |
+| **remote_updated_before** | **Time** | If provided, will only return tickets updated in the third party platform before this datetime. | [optional] |
+| **show_enum_origins** | **String** | Which fields should be returned in non-normalized form. | [optional] |
+| **status** | **String** | If provided, will only return tickets of this status. | [optional] |
+| **tags** | **String** | If provided, will only return tickets matching the tags; multiple tags can be separated by commas. | [optional] |
+| **ticket_type** | **String** | If provided, will only return tickets of this type. | [optional] |
 
 ### Return type
 
@@ -424,6 +460,8 @@ end
 
 
 
+Updates a `Ticket` object with the given `id`.
+
 ### Examples
 
 ```ruby
@@ -524,7 +562,8 @@ id = TODO # String |
 opts = {
   expand: 'account', # String | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
-  remote_fields: 'status' # String | Which fields should be returned in non-normalized form.
+  remote_fields: 'priority', # String | Deprecated. Use show_enum_origins.
+  show_enum_origins: 'priority' # String | Which fields should be returned in non-normalized form.
 }
 
 begin
@@ -562,7 +601,8 @@ end
 | **id** | [**String**](.md) |  |  |
 | **expand** | **String** | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces. | [optional] |
 | **include_remote_data** | **Boolean** | Whether to include the original data Merge fetched from the third-party to produce these models. | [optional] |
-| **remote_fields** | **String** | Which fields should be returned in non-normalized form. | [optional] |
+| **remote_fields** | **String** | Deprecated. Use show_enum_origins. | [optional] |
+| **show_enum_origins** | **String** | Which fields should be returned in non-normalized form. | [optional] |
 
 ### Return type
 

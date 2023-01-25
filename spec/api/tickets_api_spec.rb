@@ -33,12 +33,13 @@ describe 'TicketsApi' do
   end
 
   # unit tests for tickets_collaborators_list
-  # Returns a &#x60;User&#x60; object with the given &#x60;id&#x60;.
+  # Returns a list of &#x60;User&#x60; objects.
   # @param x_account_token Token identifying the end user.
-  # @param id 
+  # @param parent_id 
   # @param [Hash] opts the optional parameters
   # @option opts [String] :cursor The pagination cursor value.
   # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+  # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
   # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
   # @option opts [Integer] :page_size Number of results to return per page.
   # @return [PaginatedUserList]
@@ -67,18 +68,35 @@ describe 'TicketsApi' do
   # @param x_account_token Token identifying the end user.
   # @param [Hash] opts the optional parameters
   # @option opts [String] :account_id If provided, will only return tickets for this account.
+  # @option opts [String] :assignee_ids If provided, will only return tickets assigned to the assignee_ids; multiple assignee_ids can be separated by commas.
+  # @option opts [String] :collection_ids If provided, will only return tickets assigned to the collection_ids; multiple collection_ids can be separated by commas.
+  # @option opts [Time] :completed_after If provided, will only return tickets completed after this datetime.
+  # @option opts [Time] :completed_before If provided, will only return tickets completed before this datetime.
+  # @option opts [String] :contact_id If provided, will only return tickets for this contact.
   # @option opts [Time] :created_after If provided, will only return objects created after this datetime.
   # @option opts [Time] :created_before If provided, will only return objects created before this datetime.
   # @option opts [String] :cursor The pagination cursor value.
+  # @option opts [Time] :due_after If provided, will only return tickets due after this datetime.
+  # @option opts [Time] :due_before If provided, will only return tickets due before this datetime.
   # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
   # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
   # @option opts [Time] :modified_after If provided, will only return objects modified after this datetime.
   # @option opts [Time] :modified_before If provided, will only return objects modified before this datetime.
   # @option opts [Integer] :page_size Number of results to return per page.
+  # @option opts [String] :parent_ticket_id If provided, will only return sub tickets of the parent_ticket_id.
+  # @option opts [String] :priority If provided, will only return tickets of this priority.
   # @option opts [String] :project_id If provided, will only return tickets for this project.
-  # @option opts [String] :remote_fields Which fields should be returned in non-normalized form.
+  # @option opts [Time] :remote_created_after If provided, will only return tickets created in the third party platform after this datetime.
+  # @option opts [Time] :remote_created_before If provided, will only return tickets created in the third party platform before this datetime.
+  # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
   # @option opts [String] :remote_id The API provider&#39;s ID for the given object.
+  # @option opts [Time] :remote_updated_after If provided, will only return tickets updated in the third party platform after this datetime.
+  # @option opts [Time] :remote_updated_before If provided, will only return tickets updated in the third party platform before this datetime.
+  # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
+  # @option opts [String] :status If provided, will only return tickets of this status.
+  # @option opts [String] :tags If provided, will only return tickets matching the tags; multiple tags can be separated by commas.
+  # @option opts [String] :ticket_type If provided, will only return tickets of this type.
   # @return [PaginatedTicketList]
   describe 'tickets_list test' do
     it 'should work' do
@@ -110,6 +128,7 @@ describe 'TicketsApi' do
   end
 
   # unit tests for tickets_partial_update
+  # Updates a &#x60;Ticket&#x60; object with the given &#x60;id&#x60;.
   # @param x_account_token Token identifying the end user.
   # @param id 
   # @param patched_ticket_endpoint_request 
@@ -130,7 +149,8 @@ describe 'TicketsApi' do
   # @param [Hash] opts the optional parameters
   # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
-  # @option opts [String] :remote_fields Which fields should be returned in non-normalized form.
+  # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
+  # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
   # @return [Ticket]
   describe 'tickets_retrieve test' do
     it 'should work' do

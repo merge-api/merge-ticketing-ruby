@@ -21,24 +21,33 @@ module MergeTicketingClient
 
     attr_accessor :assignees
 
+    # The user who created this ticket.
+    attr_accessor :creator
+
     # The ticket's due date.
     attr_accessor :due_date
 
     # The current status of the ticket.
     attr_accessor :status
 
-    # The ticket's description.
+    # The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
     attr_accessor :description
 
+    # The project the ticket belongs to.
     attr_accessor :project
+
+    attr_accessor :collections
 
     # The ticket's type.
     attr_accessor :ticket_type
 
+    # The account associated with the ticket.
     attr_accessor :account
 
+    # The contact associated with the ticket.
     attr_accessor :contact
 
+    # The ticket's parent ticket.
     attr_accessor :parent_ticket
 
     attr_accessor :tags
@@ -55,18 +64,24 @@ module MergeTicketingClient
     # The 3rd party url of the Ticket.
     attr_accessor :ticket_url
 
-    # The priority or urgency of the Ticket. Possible values include: URGENT, HIGH, NORMAL, LOW - in cases where there is no clear mapping - the original value passed through.
+    # The priority or urgency of the Ticket.
     attr_accessor :priority
+
+    attr_accessor :integration_params
+
+    attr_accessor :linked_account_params
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
         :'assignees' => :'assignees',
+        :'creator' => :'creator',
         :'due_date' => :'due_date',
         :'status' => :'status',
         :'description' => :'description',
         :'project' => :'project',
+        :'collections' => :'collections',
         :'ticket_type' => :'ticket_type',
         :'account' => :'account',
         :'contact' => :'contact',
@@ -76,7 +91,9 @@ module MergeTicketingClient
         :'remote_updated_at' => :'remote_updated_at',
         :'completed_at' => :'completed_at',
         :'ticket_url' => :'ticket_url',
-        :'priority' => :'priority'
+        :'priority' => :'priority',
+        :'integration_params' => :'integration_params',
+        :'linked_account_params' => :'linked_account_params'
       }
     end
 
@@ -90,10 +107,12 @@ module MergeTicketingClient
       {
         :'name' => :'String',
         :'assignees' => :'Array<String>',
+        :'creator' => :'String',
         :'due_date' => :'Time',
         :'status' => :'TicketStatusEnum',
         :'description' => :'String',
         :'project' => :'String',
+        :'collections' => :'Array<String>',
         :'ticket_type' => :'String',
         :'account' => :'String',
         :'contact' => :'String',
@@ -103,7 +122,9 @@ module MergeTicketingClient
         :'remote_updated_at' => :'Time',
         :'completed_at' => :'Time',
         :'ticket_url' => :'String',
-        :'priority' => :'PriorityEnum'
+        :'priority' => :'PriorityEnum',
+        :'integration_params' => :'Hash<String, Object>',
+        :'linked_account_params' => :'Hash<String, Object>'
       }
     end
 
@@ -111,6 +132,7 @@ module MergeTicketingClient
     def self.openapi_nullable
       Set.new([
         :'name',
+        :'creator',
         :'due_date',
         :'status',
         :'description',
@@ -123,7 +145,9 @@ module MergeTicketingClient
         :'remote_updated_at',
         :'completed_at',
         :'ticket_url',
-        :'priority'
+        :'priority',
+        :'integration_params',
+        :'linked_account_params'
       ])
     end
 
@@ -152,6 +176,10 @@ module MergeTicketingClient
         end
       end
 
+      if attributes.key?(:'creator')
+        self.creator = attributes[:'creator']
+      end
+
       if attributes.key?(:'due_date')
         self.due_date = attributes[:'due_date']
       end
@@ -166,6 +194,12 @@ module MergeTicketingClient
 
       if attributes.key?(:'project')
         self.project = attributes[:'project']
+      end
+
+      if attributes.key?(:'collections')
+        if (value = attributes[:'collections']).is_a?(Array)
+          self.collections = value
+        end
       end
 
       if attributes.key?(:'ticket_type')
@@ -209,6 +243,18 @@ module MergeTicketingClient
       if attributes.key?(:'priority')
         self.priority = attributes[:'priority']
       end
+
+      if attributes.key?(:'integration_params')
+        if (value = attributes[:'integration_params']).is_a?(Hash)
+          self.integration_params = value
+        end
+      end
+
+      if attributes.key?(:'linked_account_params')
+        if (value = attributes[:'linked_account_params']).is_a?(Hash)
+          self.linked_account_params = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -246,10 +292,12 @@ module MergeTicketingClient
       self.class == o.class &&
           name == o.name &&
           assignees == o.assignees &&
+          creator == o.creator &&
           due_date == o.due_date &&
           status == o.status &&
           description == o.description &&
           project == o.project &&
+          collections == o.collections &&
           ticket_type == o.ticket_type &&
           account == o.account &&
           contact == o.contact &&
@@ -259,7 +307,9 @@ module MergeTicketingClient
           remote_updated_at == o.remote_updated_at &&
           completed_at == o.completed_at &&
           ticket_url == o.ticket_url &&
-          priority == o.priority
+          priority == o.priority &&
+          integration_params == o.integration_params &&
+          linked_account_params == o.linked_account_params
     end
 
     # @see the `==` method
@@ -271,7 +321,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, assignees, due_date, status, description, project, ticket_type, account, contact, parent_ticket, tags, remote_created_at, remote_updated_at, completed_at, ticket_url, priority].hash
+      [name, assignees, creator, due_date, status, description, project, collections, ticket_type, account, contact, parent_ticket, tags, remote_created_at, remote_updated_at, completed_at, ticket_url, priority, integration_params, linked_account_params].hash
     end
 
     # Builds the object from hash

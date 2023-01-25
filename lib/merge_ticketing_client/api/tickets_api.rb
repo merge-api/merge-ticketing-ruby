@@ -19,30 +19,32 @@ module MergeTicketingClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Returns a `User` object with the given `id`.
+    # Returns a list of `User` objects.
     # @param x_account_token [String] Token identifying the end user.
-    # @param id [String] 
+    # @param parent_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The pagination cursor value.
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+    # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
     # @option opts [Integer] :page_size Number of results to return per page.
     # @return [PaginatedUserList]
-    def tickets_collaborators_list(x_account_token, id, opts = {})
-      data, _status_code, _headers = tickets_collaborators_list_with_http_info(x_account_token, id, opts)
+    def tickets_collaborators_list(x_account_token, parent_id, opts = {})
+      data, _status_code, _headers = tickets_collaborators_list_with_http_info(x_account_token, parent_id, opts)
       data
     end
 
-    # Returns a &#x60;User&#x60; object with the given &#x60;id&#x60;.
+    # Returns a list of &#x60;User&#x60; objects.
     # @param x_account_token [String] Token identifying the end user.
-    # @param id [String] 
+    # @param parent_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The pagination cursor value.
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+    # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
     # @option opts [Integer] :page_size Number of results to return per page.
     # @return [Array<(PaginatedUserList, Integer, Hash)>] PaginatedUserList data, response status code and response headers
-    def tickets_collaborators_list_with_http_info(x_account_token, id, opts = {})
+    def tickets_collaborators_list_with_http_info(x_account_token, parent_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TicketsApi.tickets_collaborators_list ...'
       end
@@ -50,21 +52,22 @@ module MergeTicketingClient
       if @api_client.config.client_side_validation && x_account_token.nil?
         fail ArgumentError, "Missing the required parameter 'x_account_token' when calling TicketsApi.tickets_collaborators_list"
       end
-      # verify the required parameter 'id' is set
-      if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling TicketsApi.tickets_collaborators_list"
+      # verify the required parameter 'parent_id' is set
+      if @api_client.config.client_side_validation && parent_id.nil?
+        fail ArgumentError, "Missing the required parameter 'parent_id' when calling TicketsApi.tickets_collaborators_list"
       end
       allowable_values = ["teams"]
       if @api_client.config.client_side_validation && opts[:'expand'] && !allowable_values.include?(opts[:'expand'])
         fail ArgumentError, "invalid value for \"expand\", must be one of #{allowable_values}"
       end
       # resource path
-      local_var_path = '/tickets/{id}/collaborators'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+      local_var_path = '/tickets/{parent_id}/collaborators'.sub('{' + 'parent_id' + '}', CGI.escape(parent_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
       query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'expand'] = opts[:'expand'] if !opts[:'expand'].nil?
+      query_params[:'include_deleted_data'] = opts[:'include_deleted_data'] if !opts[:'include_deleted_data'].nil?
       query_params[:'include_remote_data'] = opts[:'include_remote_data'] if !opts[:'include_remote_data'].nil?
       query_params[:'page_size'] = opts[:'page_size'] if !opts[:'page_size'].nil?
 
@@ -183,18 +186,35 @@ module MergeTicketingClient
     # @param x_account_token [String] Token identifying the end user.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id If provided, will only return tickets for this account.
+    # @option opts [String] :assignee_ids If provided, will only return tickets assigned to the assignee_ids; multiple assignee_ids can be separated by commas.
+    # @option opts [String] :collection_ids If provided, will only return tickets assigned to the collection_ids; multiple collection_ids can be separated by commas.
+    # @option opts [Time] :completed_after If provided, will only return tickets completed after this datetime.
+    # @option opts [Time] :completed_before If provided, will only return tickets completed before this datetime.
+    # @option opts [String] :contact_id If provided, will only return tickets for this contact.
     # @option opts [Time] :created_after If provided, will only return objects created after this datetime.
     # @option opts [Time] :created_before If provided, will only return objects created before this datetime.
     # @option opts [String] :cursor The pagination cursor value.
+    # @option opts [Time] :due_after If provided, will only return tickets due after this datetime.
+    # @option opts [Time] :due_before If provided, will only return tickets due before this datetime.
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
     # @option opts [Time] :modified_after If provided, will only return objects modified after this datetime.
     # @option opts [Time] :modified_before If provided, will only return objects modified before this datetime.
     # @option opts [Integer] :page_size Number of results to return per page.
+    # @option opts [String] :parent_ticket_id If provided, will only return sub tickets of the parent_ticket_id.
+    # @option opts [String] :priority If provided, will only return tickets of this priority.
     # @option opts [String] :project_id If provided, will only return tickets for this project.
-    # @option opts [String] :remote_fields Which fields should be returned in non-normalized form.
+    # @option opts [Time] :remote_created_after If provided, will only return tickets created in the third party platform after this datetime.
+    # @option opts [Time] :remote_created_before If provided, will only return tickets created in the third party platform before this datetime.
+    # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
     # @option opts [String] :remote_id The API provider&#39;s ID for the given object.
+    # @option opts [Time] :remote_updated_after If provided, will only return tickets updated in the third party platform after this datetime.
+    # @option opts [Time] :remote_updated_before If provided, will only return tickets updated in the third party platform before this datetime.
+    # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
+    # @option opts [String] :status If provided, will only return tickets of this status.
+    # @option opts [String] :tags If provided, will only return tickets matching the tags; multiple tags can be separated by commas.
+    # @option opts [String] :ticket_type If provided, will only return tickets of this type.
     # @return [PaginatedTicketList]
     def tickets_list(x_account_token, opts = {})
       data, _status_code, _headers = tickets_list_with_http_info(x_account_token, opts)
@@ -205,18 +225,35 @@ module MergeTicketingClient
     # @param x_account_token [String] Token identifying the end user.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :account_id If provided, will only return tickets for this account.
+    # @option opts [String] :assignee_ids If provided, will only return tickets assigned to the assignee_ids; multiple assignee_ids can be separated by commas.
+    # @option opts [String] :collection_ids If provided, will only return tickets assigned to the collection_ids; multiple collection_ids can be separated by commas.
+    # @option opts [Time] :completed_after If provided, will only return tickets completed after this datetime.
+    # @option opts [Time] :completed_before If provided, will only return tickets completed before this datetime.
+    # @option opts [String] :contact_id If provided, will only return tickets for this contact.
     # @option opts [Time] :created_after If provided, will only return objects created after this datetime.
     # @option opts [Time] :created_before If provided, will only return objects created before this datetime.
     # @option opts [String] :cursor The pagination cursor value.
+    # @option opts [Time] :due_after If provided, will only return tickets due after this datetime.
+    # @option opts [Time] :due_before If provided, will only return tickets due before this datetime.
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
     # @option opts [Time] :modified_after If provided, will only return objects modified after this datetime.
     # @option opts [Time] :modified_before If provided, will only return objects modified before this datetime.
     # @option opts [Integer] :page_size Number of results to return per page.
+    # @option opts [String] :parent_ticket_id If provided, will only return sub tickets of the parent_ticket_id.
+    # @option opts [String] :priority If provided, will only return tickets of this priority.
     # @option opts [String] :project_id If provided, will only return tickets for this project.
-    # @option opts [String] :remote_fields Which fields should be returned in non-normalized form.
+    # @option opts [Time] :remote_created_after If provided, will only return tickets created in the third party platform after this datetime.
+    # @option opts [Time] :remote_created_before If provided, will only return tickets created in the third party platform before this datetime.
+    # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
     # @option opts [String] :remote_id The API provider&#39;s ID for the given object.
+    # @option opts [Time] :remote_updated_after If provided, will only return tickets updated in the third party platform after this datetime.
+    # @option opts [Time] :remote_updated_before If provided, will only return tickets updated in the third party platform before this datetime.
+    # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
+    # @option opts [String] :status If provided, will only return tickets of this status.
+    # @option opts [String] :tags If provided, will only return tickets matching the tags; multiple tags can be separated by commas.
+    # @option opts [String] :ticket_type If provided, will only return tickets of this type.
     # @return [Array<(PaginatedTicketList, Integer, Hash)>] PaginatedTicketList data, response status code and response headers
     def tickets_list_with_http_info(x_account_token, opts = {})
       if @api_client.config.debugging
@@ -226,13 +263,25 @@ module MergeTicketingClient
       if @api_client.config.client_side_validation && x_account_token.nil?
         fail ArgumentError, "Missing the required parameter 'x_account_token' when calling TicketsApi.tickets_list"
       end
-      allowable_values = ["account", "account,contact", "account,contact,parent_ticket", "account,parent_ticket", "assignees", "assignees,account", "assignees,account,contact", "assignees,account,contact,parent_ticket", "assignees,account,parent_ticket", "assignees,contact", "assignees,contact,parent_ticket", "assignees,parent_ticket", "assignees,project", "assignees,project,account", "assignees,project,account,contact", "assignees,project,account,contact,parent_ticket", "assignees,project,account,parent_ticket", "assignees,project,contact", "assignees,project,contact,parent_ticket", "assignees,project,parent_ticket", "attachments", "attachments,account", "attachments,account,contact", "attachments,account,contact,parent_ticket", "attachments,account,parent_ticket", "attachments,assignees", "attachments,assignees,account", "attachments,assignees,account,contact", "attachments,assignees,account,contact,parent_ticket", "attachments,assignees,account,parent_ticket", "attachments,assignees,contact", "attachments,assignees,contact,parent_ticket", "attachments,assignees,parent_ticket", "attachments,assignees,project", "attachments,assignees,project,account", "attachments,assignees,project,account,contact", "attachments,assignees,project,account,contact,parent_ticket", "attachments,assignees,project,account,parent_ticket", "attachments,assignees,project,contact", "attachments,assignees,project,contact,parent_ticket", "attachments,assignees,project,parent_ticket", "attachments,contact", "attachments,contact,parent_ticket", "attachments,parent_ticket", "attachments,project", "attachments,project,account", "attachments,project,account,contact", "attachments,project,account,contact,parent_ticket", "attachments,project,account,parent_ticket", "attachments,project,contact", "attachments,project,contact,parent_ticket", "attachments,project,parent_ticket", "contact", "contact,parent_ticket", "parent_ticket", "project", "project,account", "project,account,contact", "project,account,contact,parent_ticket", "project,account,parent_ticket", "project,contact", "project,contact,parent_ticket", "project,parent_ticket"]
+      allowable_values = ["account", "account,contact", "account,contact,creator", "account,contact,creator,parent_ticket", "account,contact,parent_ticket", "account,creator", "account,creator,parent_ticket", "account,parent_ticket", "assignees", "assignees,account", "assignees,account,contact", "assignees,account,contact,creator", "assignees,account,contact,creator,parent_ticket", "assignees,account,contact,parent_ticket", "assignees,account,creator", "assignees,account,creator,parent_ticket", "assignees,account,parent_ticket", "assignees,collections", "assignees,collections,account", "assignees,collections,account,contact", "assignees,collections,account,contact,creator", "assignees,collections,account,contact,creator,parent_ticket", "assignees,collections,account,contact,parent_ticket", "assignees,collections,account,creator", "assignees,collections,account,creator,parent_ticket", "assignees,collections,account,parent_ticket", "assignees,collections,contact", "assignees,collections,contact,creator", "assignees,collections,contact,creator,parent_ticket", "assignees,collections,contact,parent_ticket", "assignees,collections,creator", "assignees,collections,creator,parent_ticket", "assignees,collections,parent_ticket", "assignees,collections,project", "assignees,collections,project,account", "assignees,collections,project,account,contact", "assignees,collections,project,account,contact,creator", "assignees,collections,project,account,contact,creator,parent_ticket", "assignees,collections,project,account,contact,parent_ticket", "assignees,collections,project,account,creator", "assignees,collections,project,account,creator,parent_ticket", "assignees,collections,project,account,parent_ticket", "assignees,collections,project,contact", "assignees,collections,project,contact,creator", "assignees,collections,project,contact,creator,parent_ticket", "assignees,collections,project,contact,parent_ticket", "assignees,collections,project,creator", "assignees,collections,project,creator,parent_ticket", "assignees,collections,project,parent_ticket", "assignees,contact", "assignees,contact,creator", "assignees,contact,creator,parent_ticket", "assignees,contact,parent_ticket", "assignees,creator", "assignees,creator,parent_ticket", "assignees,parent_ticket", "assignees,project", "assignees,project,account", "assignees,project,account,contact", "assignees,project,account,contact,creator", "assignees,project,account,contact,creator,parent_ticket", "assignees,project,account,contact,parent_ticket", "assignees,project,account,creator", "assignees,project,account,creator,parent_ticket", "assignees,project,account,parent_ticket", "assignees,project,contact", "assignees,project,contact,creator", "assignees,project,contact,creator,parent_ticket", "assignees,project,contact,parent_ticket", "assignees,project,creator", "assignees,project,creator,parent_ticket", "assignees,project,parent_ticket", "attachments", "attachments,account", "attachments,account,contact", "attachments,account,contact,creator", "attachments,account,contact,creator,parent_ticket", "attachments,account,contact,parent_ticket", "attachments,account,creator", "attachments,account,creator,parent_ticket", "attachments,account,parent_ticket", "attachments,assignees", "attachments,assignees,account", "attachments,assignees,account,contact", "attachments,assignees,account,contact,creator", "attachments,assignees,account,contact,creator,parent_ticket", "attachments,assignees,account,contact,parent_ticket", "attachments,assignees,account,creator", "attachments,assignees,account,creator,parent_ticket", "attachments,assignees,account,parent_ticket", "attachments,assignees,collections", "attachments,assignees,collections,account", "attachments,assignees,collections,account,contact", "attachments,assignees,collections,account,contact,creator", "attachments,assignees,collections,account,contact,creator,parent_ticket", "attachments,assignees,collections,account,contact,parent_ticket", "attachments,assignees,collections,account,creator", "attachments,assignees,collections,account,creator,parent_ticket", "attachments,assignees,collections,account,parent_ticket", "attachments,assignees,collections,contact", "attachments,assignees,collections,contact,creator", "attachments,assignees,collections,contact,creator,parent_ticket", "attachments,assignees,collections,contact,parent_ticket", "attachments,assignees,collections,creator", "attachments,assignees,collections,creator,parent_ticket", "attachments,assignees,collections,parent_ticket", "attachments,assignees,collections,project", "attachments,assignees,collections,project,account", "attachments,assignees,collections,project,account,contact", "attachments,assignees,collections,project,account,contact,creator", "attachments,assignees,collections,project,account,contact,creator,parent_ticket", "attachments,assignees,collections,project,account,contact,parent_ticket", "attachments,assignees,collections,project,account,creator", "attachments,assignees,collections,project,account,creator,parent_ticket", "attachments,assignees,collections,project,account,parent_ticket", "attachments,assignees,collections,project,contact", "attachments,assignees,collections,project,contact,creator", "attachments,assignees,collections,project,contact,creator,parent_ticket", "attachments,assignees,collections,project,contact,parent_ticket", "attachments,assignees,collections,project,creator", "attachments,assignees,collections,project,creator,parent_ticket", "attachments,assignees,collections,project,parent_ticket", "attachments,assignees,contact", "attachments,assignees,contact,creator", "attachments,assignees,contact,creator,parent_ticket", "attachments,assignees,contact,parent_ticket", "attachments,assignees,creator", "attachments,assignees,creator,parent_ticket", "attachments,assignees,parent_ticket", "attachments,assignees,project", "attachments,assignees,project,account", "attachments,assignees,project,account,contact", "attachments,assignees,project,account,contact,creator", "attachments,assignees,project,account,contact,creator,parent_ticket", "attachments,assignees,project,account,contact,parent_ticket", "attachments,assignees,project,account,creator", "attachments,assignees,project,account,creator,parent_ticket", "attachments,assignees,project,account,parent_ticket", "attachments,assignees,project,contact", "attachments,assignees,project,contact,creator", "attachments,assignees,project,contact,creator,parent_ticket", "attachments,assignees,project,contact,parent_ticket", "attachments,assignees,project,creator", "attachments,assignees,project,creator,parent_ticket", "attachments,assignees,project,parent_ticket", "attachments,collections", "attachments,collections,account", "attachments,collections,account,contact", "attachments,collections,account,contact,creator", "attachments,collections,account,contact,creator,parent_ticket", "attachments,collections,account,contact,parent_ticket", "attachments,collections,account,creator", "attachments,collections,account,creator,parent_ticket", "attachments,collections,account,parent_ticket", "attachments,collections,contact", "attachments,collections,contact,creator", "attachments,collections,contact,creator,parent_ticket", "attachments,collections,contact,parent_ticket", "attachments,collections,creator", "attachments,collections,creator,parent_ticket", "attachments,collections,parent_ticket", "attachments,collections,project", "attachments,collections,project,account", "attachments,collections,project,account,contact", "attachments,collections,project,account,contact,creator", "attachments,collections,project,account,contact,creator,parent_ticket", "attachments,collections,project,account,contact,parent_ticket", "attachments,collections,project,account,creator", "attachments,collections,project,account,creator,parent_ticket", "attachments,collections,project,account,parent_ticket", "attachments,collections,project,contact", "attachments,collections,project,contact,creator", "attachments,collections,project,contact,creator,parent_ticket", "attachments,collections,project,contact,parent_ticket", "attachments,collections,project,creator", "attachments,collections,project,creator,parent_ticket", "attachments,collections,project,parent_ticket", "attachments,contact", "attachments,contact,creator", "attachments,contact,creator,parent_ticket", "attachments,contact,parent_ticket", "attachments,creator", "attachments,creator,parent_ticket", "attachments,parent_ticket", "attachments,project", "attachments,project,account", "attachments,project,account,contact", "attachments,project,account,contact,creator", "attachments,project,account,contact,creator,parent_ticket", "attachments,project,account,contact,parent_ticket", "attachments,project,account,creator", "attachments,project,account,creator,parent_ticket", "attachments,project,account,parent_ticket", "attachments,project,contact", "attachments,project,contact,creator", "attachments,project,contact,creator,parent_ticket", "attachments,project,contact,parent_ticket", "attachments,project,creator", "attachments,project,creator,parent_ticket", "attachments,project,parent_ticket", "collections", "collections,account", "collections,account,contact", "collections,account,contact,creator", "collections,account,contact,creator,parent_ticket", "collections,account,contact,parent_ticket", "collections,account,creator", "collections,account,creator,parent_ticket", "collections,account,parent_ticket", "collections,contact", "collections,contact,creator", "collections,contact,creator,parent_ticket", "collections,contact,parent_ticket", "collections,creator", "collections,creator,parent_ticket", "collections,parent_ticket", "collections,project", "collections,project,account", "collections,project,account,contact", "collections,project,account,contact,creator", "collections,project,account,contact,creator,parent_ticket", "collections,project,account,contact,parent_ticket", "collections,project,account,creator", "collections,project,account,creator,parent_ticket", "collections,project,account,parent_ticket", "collections,project,contact", "collections,project,contact,creator", "collections,project,contact,creator,parent_ticket", "collections,project,contact,parent_ticket", "collections,project,creator", "collections,project,creator,parent_ticket", "collections,project,parent_ticket", "contact", "contact,creator", "contact,creator,parent_ticket", "contact,parent_ticket", "creator", "creator,parent_ticket", "parent_ticket", "project", "project,account", "project,account,contact", "project,account,contact,creator", "project,account,contact,creator,parent_ticket", "project,account,contact,parent_ticket", "project,account,creator", "project,account,creator,parent_ticket", "project,account,parent_ticket", "project,contact", "project,contact,creator", "project,contact,creator,parent_ticket", "project,contact,parent_ticket", "project,creator", "project,creator,parent_ticket", "project,parent_ticket"]
       if @api_client.config.client_side_validation && opts[:'expand'] && !allowable_values.include?(opts[:'expand'])
         fail ArgumentError, "invalid value for \"expand\", must be one of #{allowable_values}"
       end
-      allowable_values = ["status"]
+      allowable_values = ["HIGH", "LOW", "NORMAL", "URGENT"]
+      if @api_client.config.client_side_validation && opts[:'priority'] && !allowable_values.include?(opts[:'priority'])
+        fail ArgumentError, "invalid value for \"priority\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["priority", "priority,status", "priority,status,ticket_type", "priority,ticket_type", "status", "status,ticket_type", "ticket_type"]
       if @api_client.config.client_side_validation && opts[:'remote_fields'] && !allowable_values.include?(opts[:'remote_fields'])
         fail ArgumentError, "invalid value for \"remote_fields\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["priority", "priority,status", "priority,status,ticket_type", "priority,ticket_type", "status", "status,ticket_type", "ticket_type"]
+      if @api_client.config.client_side_validation && opts[:'show_enum_origins'] && !allowable_values.include?(opts[:'show_enum_origins'])
+        fail ArgumentError, "invalid value for \"show_enum_origins\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["CLOSED", "IN_PROGRESS", "ON_HOLD", "OPEN"]
+      if @api_client.config.client_side_validation && opts[:'status'] && !allowable_values.include?(opts[:'status'])
+        fail ArgumentError, "invalid value for \"status\", must be one of #{allowable_values}"
       end
       # resource path
       local_var_path = '/tickets'
@@ -240,18 +289,35 @@ module MergeTicketingClient
       # query parameters
       query_params = opts[:query_params] || {}
       query_params[:'account_id'] = opts[:'account_id'] if !opts[:'account_id'].nil?
+      query_params[:'assignee_ids'] = opts[:'assignee_ids'] if !opts[:'assignee_ids'].nil?
+      query_params[:'collection_ids'] = opts[:'collection_ids'] if !opts[:'collection_ids'].nil?
+      query_params[:'completed_after'] = opts[:'completed_after'] if !opts[:'completed_after'].nil?
+      query_params[:'completed_before'] = opts[:'completed_before'] if !opts[:'completed_before'].nil?
+      query_params[:'contact_id'] = opts[:'contact_id'] if !opts[:'contact_id'].nil?
       query_params[:'created_after'] = opts[:'created_after'] if !opts[:'created_after'].nil?
       query_params[:'created_before'] = opts[:'created_before'] if !opts[:'created_before'].nil?
       query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'due_after'] = opts[:'due_after'] if !opts[:'due_after'].nil?
+      query_params[:'due_before'] = opts[:'due_before'] if !opts[:'due_before'].nil?
       query_params[:'expand'] = opts[:'expand'] if !opts[:'expand'].nil?
       query_params[:'include_deleted_data'] = opts[:'include_deleted_data'] if !opts[:'include_deleted_data'].nil?
       query_params[:'include_remote_data'] = opts[:'include_remote_data'] if !opts[:'include_remote_data'].nil?
       query_params[:'modified_after'] = opts[:'modified_after'] if !opts[:'modified_after'].nil?
       query_params[:'modified_before'] = opts[:'modified_before'] if !opts[:'modified_before'].nil?
       query_params[:'page_size'] = opts[:'page_size'] if !opts[:'page_size'].nil?
+      query_params[:'parent_ticket_id'] = opts[:'parent_ticket_id'] if !opts[:'parent_ticket_id'].nil?
+      query_params[:'priority'] = opts[:'priority'] if !opts[:'priority'].nil?
       query_params[:'project_id'] = opts[:'project_id'] if !opts[:'project_id'].nil?
+      query_params[:'remote_created_after'] = opts[:'remote_created_after'] if !opts[:'remote_created_after'].nil?
+      query_params[:'remote_created_before'] = opts[:'remote_created_before'] if !opts[:'remote_created_before'].nil?
       query_params[:'remote_fields'] = opts[:'remote_fields'] if !opts[:'remote_fields'].nil?
       query_params[:'remote_id'] = opts[:'remote_id'] if !opts[:'remote_id'].nil?
+      query_params[:'remote_updated_after'] = opts[:'remote_updated_after'] if !opts[:'remote_updated_after'].nil?
+      query_params[:'remote_updated_before'] = opts[:'remote_updated_before'] if !opts[:'remote_updated_before'].nil?
+      query_params[:'show_enum_origins'] = opts[:'show_enum_origins'] if !opts[:'show_enum_origins'].nil?
+      query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
+      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:'ticket_type'] = opts[:'ticket_type'] if !opts[:'ticket_type'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -418,6 +484,7 @@ module MergeTicketingClient
       return data, status_code, headers
     end
 
+    # Updates a `Ticket` object with the given `id`.
     # @param x_account_token [String] Token identifying the end user.
     # @param id [String] 
     # @param patched_ticket_endpoint_request [PatchedTicketEndpointRequest] 
@@ -430,6 +497,7 @@ module MergeTicketingClient
       data
     end
 
+    # Updates a &#x60;Ticket&#x60; object with the given &#x60;id&#x60;.
     # @param x_account_token [String] Token identifying the end user.
     # @param id [String] 
     # @param patched_ticket_endpoint_request [PatchedTicketEndpointRequest] 
@@ -504,7 +572,8 @@ module MergeTicketingClient
     # @param [Hash] opts the optional parameters
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
-    # @option opts [String] :remote_fields Which fields should be returned in non-normalized form.
+    # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
+    # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
     # @return [Ticket]
     def tickets_retrieve(x_account_token, id, opts = {})
       data, _status_code, _headers = tickets_retrieve_with_http_info(x_account_token, id, opts)
@@ -517,7 +586,8 @@ module MergeTicketingClient
     # @param [Hash] opts the optional parameters
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
-    # @option opts [String] :remote_fields Which fields should be returned in non-normalized form.
+    # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
+    # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
     # @return [Array<(Ticket, Integer, Hash)>] Ticket data, response status code and response headers
     def tickets_retrieve_with_http_info(x_account_token, id, opts = {})
       if @api_client.config.debugging
@@ -531,13 +601,17 @@ module MergeTicketingClient
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling TicketsApi.tickets_retrieve"
       end
-      allowable_values = ["account", "account,contact", "account,contact,parent_ticket", "account,parent_ticket", "assignees", "assignees,account", "assignees,account,contact", "assignees,account,contact,parent_ticket", "assignees,account,parent_ticket", "assignees,contact", "assignees,contact,parent_ticket", "assignees,parent_ticket", "assignees,project", "assignees,project,account", "assignees,project,account,contact", "assignees,project,account,contact,parent_ticket", "assignees,project,account,parent_ticket", "assignees,project,contact", "assignees,project,contact,parent_ticket", "assignees,project,parent_ticket", "attachments", "attachments,account", "attachments,account,contact", "attachments,account,contact,parent_ticket", "attachments,account,parent_ticket", "attachments,assignees", "attachments,assignees,account", "attachments,assignees,account,contact", "attachments,assignees,account,contact,parent_ticket", "attachments,assignees,account,parent_ticket", "attachments,assignees,contact", "attachments,assignees,contact,parent_ticket", "attachments,assignees,parent_ticket", "attachments,assignees,project", "attachments,assignees,project,account", "attachments,assignees,project,account,contact", "attachments,assignees,project,account,contact,parent_ticket", "attachments,assignees,project,account,parent_ticket", "attachments,assignees,project,contact", "attachments,assignees,project,contact,parent_ticket", "attachments,assignees,project,parent_ticket", "attachments,contact", "attachments,contact,parent_ticket", "attachments,parent_ticket", "attachments,project", "attachments,project,account", "attachments,project,account,contact", "attachments,project,account,contact,parent_ticket", "attachments,project,account,parent_ticket", "attachments,project,contact", "attachments,project,contact,parent_ticket", "attachments,project,parent_ticket", "contact", "contact,parent_ticket", "parent_ticket", "project", "project,account", "project,account,contact", "project,account,contact,parent_ticket", "project,account,parent_ticket", "project,contact", "project,contact,parent_ticket", "project,parent_ticket"]
+      allowable_values = ["account", "account,contact", "account,contact,creator", "account,contact,creator,parent_ticket", "account,contact,parent_ticket", "account,creator", "account,creator,parent_ticket", "account,parent_ticket", "assignees", "assignees,account", "assignees,account,contact", "assignees,account,contact,creator", "assignees,account,contact,creator,parent_ticket", "assignees,account,contact,parent_ticket", "assignees,account,creator", "assignees,account,creator,parent_ticket", "assignees,account,parent_ticket", "assignees,collections", "assignees,collections,account", "assignees,collections,account,contact", "assignees,collections,account,contact,creator", "assignees,collections,account,contact,creator,parent_ticket", "assignees,collections,account,contact,parent_ticket", "assignees,collections,account,creator", "assignees,collections,account,creator,parent_ticket", "assignees,collections,account,parent_ticket", "assignees,collections,contact", "assignees,collections,contact,creator", "assignees,collections,contact,creator,parent_ticket", "assignees,collections,contact,parent_ticket", "assignees,collections,creator", "assignees,collections,creator,parent_ticket", "assignees,collections,parent_ticket", "assignees,collections,project", "assignees,collections,project,account", "assignees,collections,project,account,contact", "assignees,collections,project,account,contact,creator", "assignees,collections,project,account,contact,creator,parent_ticket", "assignees,collections,project,account,contact,parent_ticket", "assignees,collections,project,account,creator", "assignees,collections,project,account,creator,parent_ticket", "assignees,collections,project,account,parent_ticket", "assignees,collections,project,contact", "assignees,collections,project,contact,creator", "assignees,collections,project,contact,creator,parent_ticket", "assignees,collections,project,contact,parent_ticket", "assignees,collections,project,creator", "assignees,collections,project,creator,parent_ticket", "assignees,collections,project,parent_ticket", "assignees,contact", "assignees,contact,creator", "assignees,contact,creator,parent_ticket", "assignees,contact,parent_ticket", "assignees,creator", "assignees,creator,parent_ticket", "assignees,parent_ticket", "assignees,project", "assignees,project,account", "assignees,project,account,contact", "assignees,project,account,contact,creator", "assignees,project,account,contact,creator,parent_ticket", "assignees,project,account,contact,parent_ticket", "assignees,project,account,creator", "assignees,project,account,creator,parent_ticket", "assignees,project,account,parent_ticket", "assignees,project,contact", "assignees,project,contact,creator", "assignees,project,contact,creator,parent_ticket", "assignees,project,contact,parent_ticket", "assignees,project,creator", "assignees,project,creator,parent_ticket", "assignees,project,parent_ticket", "attachments", "attachments,account", "attachments,account,contact", "attachments,account,contact,creator", "attachments,account,contact,creator,parent_ticket", "attachments,account,contact,parent_ticket", "attachments,account,creator", "attachments,account,creator,parent_ticket", "attachments,account,parent_ticket", "attachments,assignees", "attachments,assignees,account", "attachments,assignees,account,contact", "attachments,assignees,account,contact,creator", "attachments,assignees,account,contact,creator,parent_ticket", "attachments,assignees,account,contact,parent_ticket", "attachments,assignees,account,creator", "attachments,assignees,account,creator,parent_ticket", "attachments,assignees,account,parent_ticket", "attachments,assignees,collections", "attachments,assignees,collections,account", "attachments,assignees,collections,account,contact", "attachments,assignees,collections,account,contact,creator", "attachments,assignees,collections,account,contact,creator,parent_ticket", "attachments,assignees,collections,account,contact,parent_ticket", "attachments,assignees,collections,account,creator", "attachments,assignees,collections,account,creator,parent_ticket", "attachments,assignees,collections,account,parent_ticket", "attachments,assignees,collections,contact", "attachments,assignees,collections,contact,creator", "attachments,assignees,collections,contact,creator,parent_ticket", "attachments,assignees,collections,contact,parent_ticket", "attachments,assignees,collections,creator", "attachments,assignees,collections,creator,parent_ticket", "attachments,assignees,collections,parent_ticket", "attachments,assignees,collections,project", "attachments,assignees,collections,project,account", "attachments,assignees,collections,project,account,contact", "attachments,assignees,collections,project,account,contact,creator", "attachments,assignees,collections,project,account,contact,creator,parent_ticket", "attachments,assignees,collections,project,account,contact,parent_ticket", "attachments,assignees,collections,project,account,creator", "attachments,assignees,collections,project,account,creator,parent_ticket", "attachments,assignees,collections,project,account,parent_ticket", "attachments,assignees,collections,project,contact", "attachments,assignees,collections,project,contact,creator", "attachments,assignees,collections,project,contact,creator,parent_ticket", "attachments,assignees,collections,project,contact,parent_ticket", "attachments,assignees,collections,project,creator", "attachments,assignees,collections,project,creator,parent_ticket", "attachments,assignees,collections,project,parent_ticket", "attachments,assignees,contact", "attachments,assignees,contact,creator", "attachments,assignees,contact,creator,parent_ticket", "attachments,assignees,contact,parent_ticket", "attachments,assignees,creator", "attachments,assignees,creator,parent_ticket", "attachments,assignees,parent_ticket", "attachments,assignees,project", "attachments,assignees,project,account", "attachments,assignees,project,account,contact", "attachments,assignees,project,account,contact,creator", "attachments,assignees,project,account,contact,creator,parent_ticket", "attachments,assignees,project,account,contact,parent_ticket", "attachments,assignees,project,account,creator", "attachments,assignees,project,account,creator,parent_ticket", "attachments,assignees,project,account,parent_ticket", "attachments,assignees,project,contact", "attachments,assignees,project,contact,creator", "attachments,assignees,project,contact,creator,parent_ticket", "attachments,assignees,project,contact,parent_ticket", "attachments,assignees,project,creator", "attachments,assignees,project,creator,parent_ticket", "attachments,assignees,project,parent_ticket", "attachments,collections", "attachments,collections,account", "attachments,collections,account,contact", "attachments,collections,account,contact,creator", "attachments,collections,account,contact,creator,parent_ticket", "attachments,collections,account,contact,parent_ticket", "attachments,collections,account,creator", "attachments,collections,account,creator,parent_ticket", "attachments,collections,account,parent_ticket", "attachments,collections,contact", "attachments,collections,contact,creator", "attachments,collections,contact,creator,parent_ticket", "attachments,collections,contact,parent_ticket", "attachments,collections,creator", "attachments,collections,creator,parent_ticket", "attachments,collections,parent_ticket", "attachments,collections,project", "attachments,collections,project,account", "attachments,collections,project,account,contact", "attachments,collections,project,account,contact,creator", "attachments,collections,project,account,contact,creator,parent_ticket", "attachments,collections,project,account,contact,parent_ticket", "attachments,collections,project,account,creator", "attachments,collections,project,account,creator,parent_ticket", "attachments,collections,project,account,parent_ticket", "attachments,collections,project,contact", "attachments,collections,project,contact,creator", "attachments,collections,project,contact,creator,parent_ticket", "attachments,collections,project,contact,parent_ticket", "attachments,collections,project,creator", "attachments,collections,project,creator,parent_ticket", "attachments,collections,project,parent_ticket", "attachments,contact", "attachments,contact,creator", "attachments,contact,creator,parent_ticket", "attachments,contact,parent_ticket", "attachments,creator", "attachments,creator,parent_ticket", "attachments,parent_ticket", "attachments,project", "attachments,project,account", "attachments,project,account,contact", "attachments,project,account,contact,creator", "attachments,project,account,contact,creator,parent_ticket", "attachments,project,account,contact,parent_ticket", "attachments,project,account,creator", "attachments,project,account,creator,parent_ticket", "attachments,project,account,parent_ticket", "attachments,project,contact", "attachments,project,contact,creator", "attachments,project,contact,creator,parent_ticket", "attachments,project,contact,parent_ticket", "attachments,project,creator", "attachments,project,creator,parent_ticket", "attachments,project,parent_ticket", "collections", "collections,account", "collections,account,contact", "collections,account,contact,creator", "collections,account,contact,creator,parent_ticket", "collections,account,contact,parent_ticket", "collections,account,creator", "collections,account,creator,parent_ticket", "collections,account,parent_ticket", "collections,contact", "collections,contact,creator", "collections,contact,creator,parent_ticket", "collections,contact,parent_ticket", "collections,creator", "collections,creator,parent_ticket", "collections,parent_ticket", "collections,project", "collections,project,account", "collections,project,account,contact", "collections,project,account,contact,creator", "collections,project,account,contact,creator,parent_ticket", "collections,project,account,contact,parent_ticket", "collections,project,account,creator", "collections,project,account,creator,parent_ticket", "collections,project,account,parent_ticket", "collections,project,contact", "collections,project,contact,creator", "collections,project,contact,creator,parent_ticket", "collections,project,contact,parent_ticket", "collections,project,creator", "collections,project,creator,parent_ticket", "collections,project,parent_ticket", "contact", "contact,creator", "contact,creator,parent_ticket", "contact,parent_ticket", "creator", "creator,parent_ticket", "parent_ticket", "project", "project,account", "project,account,contact", "project,account,contact,creator", "project,account,contact,creator,parent_ticket", "project,account,contact,parent_ticket", "project,account,creator", "project,account,creator,parent_ticket", "project,account,parent_ticket", "project,contact", "project,contact,creator", "project,contact,creator,parent_ticket", "project,contact,parent_ticket", "project,creator", "project,creator,parent_ticket", "project,parent_ticket"]
       if @api_client.config.client_side_validation && opts[:'expand'] && !allowable_values.include?(opts[:'expand'])
         fail ArgumentError, "invalid value for \"expand\", must be one of #{allowable_values}"
       end
-      allowable_values = ["status"]
+      allowable_values = ["priority", "priority,status", "priority,status,ticket_type", "priority,ticket_type", "status", "status,ticket_type", "ticket_type"]
       if @api_client.config.client_side_validation && opts[:'remote_fields'] && !allowable_values.include?(opts[:'remote_fields'])
         fail ArgumentError, "invalid value for \"remote_fields\", must be one of #{allowable_values}"
+      end
+      allowable_values = ["priority", "priority,status", "priority,status,ticket_type", "priority,ticket_type", "status", "status,ticket_type", "ticket_type"]
+      if @api_client.config.client_side_validation && opts[:'show_enum_origins'] && !allowable_values.include?(opts[:'show_enum_origins'])
+        fail ArgumentError, "invalid value for \"show_enum_origins\", must be one of #{allowable_values}"
       end
       # resource path
       local_var_path = '/tickets/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
@@ -547,6 +621,7 @@ module MergeTicketingClient
       query_params[:'expand'] = opts[:'expand'] if !opts[:'expand'].nil?
       query_params[:'include_remote_data'] = opts[:'include_remote_data'] if !opts[:'include_remote_data'].nil?
       query_params[:'remote_fields'] = opts[:'remote_fields'] if !opts[:'remote_fields'].nil?
+      query_params[:'show_enum_origins'] = opts[:'show_enum_origins'] if !opts[:'show_enum_origins'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

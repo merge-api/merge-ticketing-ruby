@@ -32,6 +32,8 @@ module MergeTicketingClient
     # Indicates whether or not this object has been deleted by third party webhooks.
     attr_accessor :remote_was_deleted
 
+    attr_accessor :field_mappings
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -40,7 +42,8 @@ module MergeTicketingClient
         :'name' => :'name',
         :'domains' => :'domains',
         :'remote_data' => :'remote_data',
-        :'remote_was_deleted' => :'remote_was_deleted'
+        :'remote_was_deleted' => :'remote_was_deleted',
+        :'field_mappings' => :'field_mappings'
       }
     end
 
@@ -57,7 +60,8 @@ module MergeTicketingClient
         :'name' => :'String',
         :'domains' => :'Array<String>',
         :'remote_data' => :'Array<RemoteData>',
-        :'remote_was_deleted' => :'Boolean'
+        :'remote_was_deleted' => :'Boolean',
+        :'field_mappings' => :'Hash<String, Object>'
       }
     end
 
@@ -68,6 +72,7 @@ module MergeTicketingClient
         :'name',
         :'domains',
         :'remote_data',
+        :'field_mappings'
       ])
     end
 
@@ -113,6 +118,12 @@ module MergeTicketingClient
       if attributes.key?(:'remote_was_deleted')
         self.remote_was_deleted = attributes[:'remote_was_deleted']
       end
+
+      if attributes.key?(:'field_mappings')
+        if (value = attributes[:'field_mappings']).is_a?(Hash)
+          self.field_mappings = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -138,7 +149,8 @@ module MergeTicketingClient
           name == o.name &&
           domains == o.domains &&
           remote_data == o.remote_data &&
-          remote_was_deleted == o.remote_was_deleted
+          remote_was_deleted == o.remote_was_deleted &&
+          field_mappings == o.field_mappings
     end
 
     # @see the `==` method
@@ -150,7 +162,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, name, domains, remote_data, remote_was_deleted].hash
+      [id, remote_id, name, domains, remote_data, remote_was_deleted, field_mappings].hash
     end
 
     # Builds the object from hash

@@ -22,6 +22,7 @@ module MergeTicketingClient
     # The attachment's name.
     attr_accessor :file_name
 
+    # The ticket associated with the attachment.
     attr_accessor :ticket
 
     # The attachment's url.
@@ -30,10 +31,15 @@ module MergeTicketingClient
     # The attachment's file format.
     attr_accessor :content_type
 
+    # The user who uploaded the attachment.
     attr_accessor :uploaded_by
 
     # When the third party's attachment was created.
     attr_accessor :remote_created_at
+
+    attr_accessor :integration_params
+
+    attr_accessor :linked_account_params
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -44,7 +50,9 @@ module MergeTicketingClient
         :'file_url' => :'file_url',
         :'content_type' => :'content_type',
         :'uploaded_by' => :'uploaded_by',
-        :'remote_created_at' => :'remote_created_at'
+        :'remote_created_at' => :'remote_created_at',
+        :'integration_params' => :'integration_params',
+        :'linked_account_params' => :'linked_account_params'
       }
     end
 
@@ -62,7 +70,9 @@ module MergeTicketingClient
         :'file_url' => :'String',
         :'content_type' => :'String',
         :'uploaded_by' => :'String',
-        :'remote_created_at' => :'Time'
+        :'remote_created_at' => :'Time',
+        :'integration_params' => :'Hash<String, Object>',
+        :'linked_account_params' => :'Hash<String, Object>'
       }
     end
 
@@ -75,7 +85,9 @@ module MergeTicketingClient
         :'file_url',
         :'content_type',
         :'uploaded_by',
-        :'remote_created_at'
+        :'remote_created_at',
+        :'integration_params',
+        :'linked_account_params'
       ])
     end
 
@@ -121,6 +133,18 @@ module MergeTicketingClient
       if attributes.key?(:'remote_created_at')
         self.remote_created_at = attributes[:'remote_created_at']
       end
+
+      if attributes.key?(:'integration_params')
+        if (value = attributes[:'integration_params']).is_a?(Hash)
+          self.integration_params = value
+        end
+      end
+
+      if attributes.key?(:'linked_account_params')
+        if (value = attributes[:'linked_account_params']).is_a?(Hash)
+          self.linked_account_params = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -147,7 +171,9 @@ module MergeTicketingClient
           file_url == o.file_url &&
           content_type == o.content_type &&
           uploaded_by == o.uploaded_by &&
-          remote_created_at == o.remote_created_at
+          remote_created_at == o.remote_created_at &&
+          integration_params == o.integration_params &&
+          linked_account_params == o.linked_account_params
     end
 
     # @see the `==` method
@@ -159,7 +185,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [remote_id, file_name, ticket, file_url, content_type, uploaded_by, remote_created_at].hash
+      [remote_id, file_name, ticket, file_url, content_type, uploaded_by, remote_created_at, integration_params, linked_account_params].hash
     end
 
     # Builds the object from hash

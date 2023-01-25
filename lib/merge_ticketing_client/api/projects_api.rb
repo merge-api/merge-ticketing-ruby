@@ -179,30 +179,32 @@ module MergeTicketingClient
       return data, status_code, headers
     end
 
-    # Returns a `User` object with the given `id`.
+    # Returns a list of `User` objects.
     # @param x_account_token [String] Token identifying the end user.
-    # @param id [String] 
+    # @param parent_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The pagination cursor value.
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+    # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
     # @option opts [Integer] :page_size Number of results to return per page.
     # @return [PaginatedUserList]
-    def projects_users_list(x_account_token, id, opts = {})
-      data, _status_code, _headers = projects_users_list_with_http_info(x_account_token, id, opts)
+    def projects_users_list(x_account_token, parent_id, opts = {})
+      data, _status_code, _headers = projects_users_list_with_http_info(x_account_token, parent_id, opts)
       data
     end
 
-    # Returns a &#x60;User&#x60; object with the given &#x60;id&#x60;.
+    # Returns a list of &#x60;User&#x60; objects.
     # @param x_account_token [String] Token identifying the end user.
-    # @param id [String] 
+    # @param parent_id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The pagination cursor value.
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+    # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
     # @option opts [Integer] :page_size Number of results to return per page.
     # @return [Array<(PaginatedUserList, Integer, Hash)>] PaginatedUserList data, response status code and response headers
-    def projects_users_list_with_http_info(x_account_token, id, opts = {})
+    def projects_users_list_with_http_info(x_account_token, parent_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: ProjectsApi.projects_users_list ...'
       end
@@ -210,21 +212,22 @@ module MergeTicketingClient
       if @api_client.config.client_side_validation && x_account_token.nil?
         fail ArgumentError, "Missing the required parameter 'x_account_token' when calling ProjectsApi.projects_users_list"
       end
-      # verify the required parameter 'id' is set
-      if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling ProjectsApi.projects_users_list"
+      # verify the required parameter 'parent_id' is set
+      if @api_client.config.client_side_validation && parent_id.nil?
+        fail ArgumentError, "Missing the required parameter 'parent_id' when calling ProjectsApi.projects_users_list"
       end
       allowable_values = ["teams"]
       if @api_client.config.client_side_validation && opts[:'expand'] && !allowable_values.include?(opts[:'expand'])
         fail ArgumentError, "invalid value for \"expand\", must be one of #{allowable_values}"
       end
       # resource path
-      local_var_path = '/projects/{id}/users'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+      local_var_path = '/projects/{parent_id}/users'.sub('{' + 'parent_id' + '}', CGI.escape(parent_id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
       query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'expand'] = opts[:'expand'] if !opts[:'expand'].nil?
+      query_params[:'include_deleted_data'] = opts[:'include_deleted_data'] if !opts[:'include_deleted_data'].nil?
       query_params[:'include_remote_data'] = opts[:'include_remote_data'] if !opts[:'include_remote_data'].nil?
       query_params[:'page_size'] = opts[:'page_size'] if !opts[:'page_size'].nil?
 
