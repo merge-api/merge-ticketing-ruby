@@ -2,17 +2,17 @@
 
 ## Properties
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **id** | **String** |  | [optional][readonly] |
-| **remote_id** | **String** | The third-party API ID of the matching object. | [optional] |
-| **name** | **String** | The collection&#39;s name. | [optional] |
-| **description** | **String** | The collection&#39;s description. | [optional] |
-| **collection_type** | [**CollectionTypeEnum**](CollectionTypeEnum.md) | The collection&#39;s type. | [optional] |
-| **parent_collection** | **String** | The parent collection for this collection. | [optional] |
-| **remote_data** | [**Array&lt;RemoteData&gt;**](RemoteData.md) |  | [optional][readonly] |
-| **remote_was_deleted** | **Boolean** | Indicates whether or not this object has been deleted by third party webhooks. | [optional] |
-| **field_mappings** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional][readonly] |
+| Name                   | Type                                            | Description                                                                    | Notes                |
+| ---------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------ | -------------------- |
+| **id**                 | **String**                                      |                                                                                | [optional][readonly] |
+| **remote_id**          | **String**                                      | The third-party API ID of the matching object.                                 | [optional]           |
+| **name**               | **String**                                      | The collection&#39;s name.                                                     | [optional]           |
+| **description**        | **String**                                      | The collection&#39;s description.                                              | [optional]           |
+| **collection_type**    | [**CollectionTypeEnum**](CollectionTypeEnum.md) | The collection&#39;s type.                                                     | [optional]           |
+| **parent_collection**  | **String**                                      | The parent collection for this collection.                                     | [optional]           |
+| **remote_data**        | [**Array&lt;RemoteData&gt;**](RemoteData.md)    |                                                                                | [optional][readonly] |
+| **remote_was_deleted** | **Boolean**                                     | Indicates whether or not this object has been deleted by third party webhooks. | [optional]           |
+| **field_mappings**     | [**Hash&lt;String, Object&gt;**](Object.md)     |                                                                                | [optional][readonly] |
 
 ## Example
 
@@ -31,4 +31,3 @@ instance = MergeTicketingClient::Collection.new(
   field_mappings: {&quot;organization_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;},&quot;linked_account_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;}}
 )
 ```
-

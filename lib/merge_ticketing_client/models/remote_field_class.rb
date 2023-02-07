@@ -14,41 +14,43 @@ require 'date'
 require 'time'
 
 module MergeTicketingClient
-  # # The Comment Object ### Description The `Comment` object is used to represent a comment on a ticket.  ### Usage Example TODO
-  class CommentRequest
-    # The author of the Comment, if the author is a User.
-    attr_accessor :user
+  class RemoteFieldClass
+    attr_accessor :display_name
 
-    # The author of the Comment, if the author is a Contact.
-    attr_accessor :contact
+    attr_accessor :remote_key_name
 
-    # The comment's text body.
-    attr_accessor :body
+    attr_accessor :description
 
-    # The comment's text body formatted as html.
-    attr_accessor :html_body
+    attr_accessor :is_required
 
-    # The ticket associated with the comment. 
-    attr_accessor :ticket
+    attr_accessor :field_type
 
-    # Whether or not the comment is internal.
-    attr_accessor :is_private
+    attr_accessor :field_format
 
-    attr_accessor :integration_params
+    attr_accessor :field_choices
 
-    attr_accessor :linked_account_params
+    attr_accessor :item_schema
+
+    attr_accessor :is_custom
+
+    attr_accessor :id
+
+    attr_accessor :remote_fields
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'user' => :'user',
-        :'contact' => :'contact',
-        :'body' => :'body',
-        :'html_body' => :'html_body',
-        :'ticket' => :'ticket',
-        :'is_private' => :'is_private',
-        :'integration_params' => :'integration_params',
-        :'linked_account_params' => :'linked_account_params'
+        :'display_name' => :'display_name',
+        :'remote_key_name' => :'remote_key_name',
+        :'description' => :'description',
+        :'is_required' => :'is_required',
+        :'field_type' => :'field_type',
+        :'field_format' => :'field_format',
+        :'field_choices' => :'field_choices',
+        :'item_schema' => :'item_schema',
+        :'is_custom' => :'is_custom',
+        :'id' => :'id',
+        :'remote_fields' => :'remote_fields'
       }
     end
 
@@ -60,28 +62,29 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'user' => :'String',
-        :'contact' => :'String',
-        :'body' => :'String',
-        :'html_body' => :'String',
-        :'ticket' => :'String',
-        :'is_private' => :'Boolean',
-        :'integration_params' => :'Hash<String, Object>',
-        :'linked_account_params' => :'Hash<String, Object>'
+        :'display_name' => :'String',
+        :'remote_key_name' => :'String',
+        :'description' => :'String',
+        :'is_required' => :'Boolean',
+        :'field_type' => :'FieldTypeEnum',
+        :'field_format' => :'FieldFormatEnum',
+        :'field_choices' => :'Array<String>',
+        :'item_schema' => :'RemoteFieldClassItemSchema',
+        :'is_custom' => :'Boolean',
+        :'id' => :'String',
+        :'remote_fields' => :'Array<RemoteField>'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'user',
-        :'contact',
-        :'body',
-        :'html_body',
-        :'ticket',
-        :'is_private',
-        :'integration_params',
-        :'linked_account_params'
+        :'display_name',
+        :'remote_key_name',
+        :'description',
+        :'field_choices',
+        :'item_schema',
+        :'is_custom',
       ])
     end
 
@@ -89,50 +92,62 @@ module MergeTicketingClient
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::CommentRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::RemoteFieldClass` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::CommentRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::RemoteFieldClass`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'user')
-        self.user = attributes[:'user']
+      if attributes.key?(:'display_name')
+        self.display_name = attributes[:'display_name']
       end
 
-      if attributes.key?(:'contact')
-        self.contact = attributes[:'contact']
+      if attributes.key?(:'remote_key_name')
+        self.remote_key_name = attributes[:'remote_key_name']
       end
 
-      if attributes.key?(:'body')
-        self.body = attributes[:'body']
+      if attributes.key?(:'description')
+        self.description = attributes[:'description']
       end
 
-      if attributes.key?(:'html_body')
-        self.html_body = attributes[:'html_body']
+      if attributes.key?(:'is_required')
+        self.is_required = attributes[:'is_required']
       end
 
-      if attributes.key?(:'ticket')
-        self.ticket = attributes[:'ticket']
+      if attributes.key?(:'field_type')
+        self.field_type = attributes[:'field_type']
       end
 
-      if attributes.key?(:'is_private')
-        self.is_private = attributes[:'is_private']
+      if attributes.key?(:'field_format')
+        self.field_format = attributes[:'field_format']
       end
 
-      if attributes.key?(:'integration_params')
-        if (value = attributes[:'integration_params']).is_a?(Hash)
-          self.integration_params = value
+      if attributes.key?(:'field_choices')
+        if (value = attributes[:'field_choices']).is_a?(Array)
+          self.field_choices = value
         end
       end
 
-      if attributes.key?(:'linked_account_params')
-        if (value = attributes[:'linked_account_params']).is_a?(Hash)
-          self.linked_account_params = value
+      if attributes.key?(:'item_schema')
+        self.item_schema = attributes[:'item_schema']
+      end
+
+      if attributes.key?(:'is_custom')
+        self.is_custom = attributes[:'is_custom']
+      end
+
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
+      end
+
+      if attributes.key?(:'remote_fields')
+        if (value = attributes[:'remote_fields']).is_a?(Array)
+          self.remote_fields = value
         end
       end
     end
@@ -155,14 +170,17 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          user == o.user &&
-          contact == o.contact &&
-          body == o.body &&
-          html_body == o.html_body &&
-          ticket == o.ticket &&
-          is_private == o.is_private &&
-          integration_params == o.integration_params &&
-          linked_account_params == o.linked_account_params
+          display_name == o.display_name &&
+          remote_key_name == o.remote_key_name &&
+          description == o.description &&
+          is_required == o.is_required &&
+          field_type == o.field_type &&
+          field_format == o.field_format &&
+          field_choices == o.field_choices &&
+          item_schema == o.item_schema &&
+          is_custom == o.is_custom &&
+          id == o.id &&
+          remote_fields == o.remote_fields
     end
 
     # @see the `==` method
@@ -174,7 +192,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [user, contact, body, html_body, ticket, is_private, integration_params, linked_account_params].hash
+      [display_name, remote_key_name, description, is_required, field_type, field_format, field_choices, item_schema, is_custom, id, remote_fields].hash
     end
 
     # Builds the object from hash

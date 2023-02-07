@@ -14,13 +14,13 @@ require 'date'
 require 'time'
 
 module MergeTicketingClient
-  class CategoryEnum
-    HRIS = "hris".freeze
-    ATS = "ats".freeze
-    ACCOUNTING = "accounting".freeze
-    TICKETING = "ticketing".freeze
-    CRM = "crm".freeze
-    MKTG = "mktg".freeze
+  class FieldFormatEnum
+    STRING = "string".freeze
+    NUMBER = "number".freeze
+    DATE = "date".freeze
+    DATETIME = "datetime".freeze
+    BOOL = "bool".freeze
+    LIST = "list".freeze
 
     MERGE_NONSTANDARD_VALUE = "MERGE_NONSTANDARD_VALUE".freeze
 
@@ -32,7 +32,7 @@ module MergeTicketingClient
     # @return [String] The enum value
     def build_from_hash(value)
       @raw_value = value
-      if ["hris", "ats", "accounting", "ticketing", "crm", "mktg", ].include? value
+      if ["string", "number", "date", "datetime", "bool", "list", ].include? value
         @value = value
       else
         @value = MERGE_NONSTANDARD_VALUE
@@ -42,7 +42,7 @@ module MergeTicketingClient
     end
 
     def self.build_from_hash(value)
-      CategoryEnum.new.build_from_hash(value)
+      FieldFormatEnum.new.build_from_hash(value)
     end
   end
 

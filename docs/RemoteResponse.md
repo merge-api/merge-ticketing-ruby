@@ -2,15 +2,15 @@
 
 ## Properties
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **method** | **String** |  |  |
-| **path** | **String** |  |  |
-| **status** | **Integer** |  |  |
-| **response** | [**AnyType**](.md) |  |  |
-| **response_headers** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional] |
-| **response_type** | [**ResponseTypeEnum**](ResponseTypeEnum.md) |  | [optional] |
-| **headers** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional] |
+| Name                 | Type                                        | Description | Notes      |
+| -------------------- | ------------------------------------------- | ----------- | ---------- |
+| **method**           | **String**                                  |             |            |
+| **path**             | **String**                                  |             |            |
+| **status**           | **Integer**                                 |             |            |
+| **response**         | [**Object**](.md)                           |             |            |
+| **response_headers** | [**Hash&lt;String, Object&gt;**](Object.md) |             | [optional] |
+| **response_type**    | [**ResponseTypeEnum**](ResponseTypeEnum.md) |             | [optional] |
+| **headers**          | [**Hash&lt;String, Object&gt;**](Object.md) |             | [optional] |
 
 ## Example
 
@@ -27,4 +27,3 @@ instance = MergeTicketingClient::RemoteResponse.new(
   headers: {&quot;EXTRA-HEADER&quot;:&quot;value&quot;,&quot;Authorization&quot;:&quot;&lt;redacted&gt;&quot;}
 )
 ```
-

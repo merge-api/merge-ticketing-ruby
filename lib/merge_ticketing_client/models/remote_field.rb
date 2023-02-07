@@ -14,41 +14,16 @@ require 'date'
 require 'time'
 
 module MergeTicketingClient
-  # # The Comment Object ### Description The `Comment` object is used to represent a comment on a ticket.  ### Usage Example TODO
-  class CommentRequest
-    # The author of the Comment, if the author is a User.
-    attr_accessor :user
+  class RemoteField
+    attr_accessor :value
 
-    # The author of the Comment, if the author is a Contact.
-    attr_accessor :contact
-
-    # The comment's text body.
-    attr_accessor :body
-
-    # The comment's text body formatted as html.
-    attr_accessor :html_body
-
-    # The ticket associated with the comment. 
-    attr_accessor :ticket
-
-    # Whether or not the comment is internal.
-    attr_accessor :is_private
-
-    attr_accessor :integration_params
-
-    attr_accessor :linked_account_params
+    attr_accessor :remote_field_class
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'user' => :'user',
-        :'contact' => :'contact',
-        :'body' => :'body',
-        :'html_body' => :'html_body',
-        :'ticket' => :'ticket',
-        :'is_private' => :'is_private',
-        :'integration_params' => :'integration_params',
-        :'linked_account_params' => :'linked_account_params'
+        :'value' => :'value',
+        :'remote_field_class' => :'remote_field_class'
       }
     end
 
@@ -60,28 +35,16 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'user' => :'String',
-        :'contact' => :'String',
-        :'body' => :'String',
-        :'html_body' => :'String',
-        :'ticket' => :'String',
-        :'is_private' => :'Boolean',
-        :'integration_params' => :'Hash<String, Object>',
-        :'linked_account_params' => :'Hash<String, Object>'
+        :'value' => :'Hash<String, Object>',
+        :'remote_field_class' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'user',
-        :'contact',
-        :'body',
-        :'html_body',
-        :'ticket',
-        :'is_private',
-        :'integration_params',
-        :'linked_account_params'
+        :'value',
+        :'remote_field_class'
       ])
     end
 
@@ -89,51 +52,25 @@ module MergeTicketingClient
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::CommentRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `MergeTicketingClient::RemoteField` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::CommentRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `MergeTicketingClient::RemoteField`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'user')
-        self.user = attributes[:'user']
-      end
-
-      if attributes.key?(:'contact')
-        self.contact = attributes[:'contact']
-      end
-
-      if attributes.key?(:'body')
-        self.body = attributes[:'body']
-      end
-
-      if attributes.key?(:'html_body')
-        self.html_body = attributes[:'html_body']
-      end
-
-      if attributes.key?(:'ticket')
-        self.ticket = attributes[:'ticket']
-      end
-
-      if attributes.key?(:'is_private')
-        self.is_private = attributes[:'is_private']
-      end
-
-      if attributes.key?(:'integration_params')
-        if (value = attributes[:'integration_params']).is_a?(Hash)
-          self.integration_params = value
+      if attributes.key?(:'value')
+        if (value = attributes[:'value']).is_a?(Hash)
+          self.value = value
         end
       end
 
-      if attributes.key?(:'linked_account_params')
-        if (value = attributes[:'linked_account_params']).is_a?(Hash)
-          self.linked_account_params = value
-        end
+      if attributes.key?(:'remote_field_class')
+        self.remote_field_class = attributes[:'remote_field_class']
       end
     end
 
@@ -155,14 +92,8 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          user == o.user &&
-          contact == o.contact &&
-          body == o.body &&
-          html_body == o.html_body &&
-          ticket == o.ticket &&
-          is_private == o.is_private &&
-          integration_params == o.integration_params &&
-          linked_account_params == o.linked_account_params
+          value == o.value &&
+          remote_field_class == o.remote_field_class
     end
 
     # @see the `==` method
@@ -174,7 +105,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [user, contact, body, html_body, ticket, is_private, integration_params, linked_account_params].hash
+      [value, remote_field_class].hash
     end
 
     # Builds the object from hash
