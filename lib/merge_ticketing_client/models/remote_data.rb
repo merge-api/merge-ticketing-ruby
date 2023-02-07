@@ -169,12 +169,12 @@ module MergeTicketingClient
       when /\AHash<(?<k_type>.+?), (?<v_type>.+)>\z/
         k_type = Regexp.last_match[:k_type]
         v_type = Regexp.last_match[:v_type]
-        if value.is_a? Enumerable
-        {}.tap do |hash|
-            value.each do |k, v|
-              hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
+        if value.is_a? Hash
+          {}.tap do |hash|
+              value.each do |k, v|
+                hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
+              end
             end
-          end
         else
           _deserialize(v_type, value)
         end
