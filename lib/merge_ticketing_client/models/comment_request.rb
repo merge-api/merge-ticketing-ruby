@@ -16,9 +16,6 @@ require 'time'
 module MergeTicketingClient
   # # The Comment Object ### Description The `Comment` object is used to represent a comment on a ticket.  ### Usage Example TODO
   class CommentRequest
-    # The third-party API ID of the matching object.
-    attr_accessor :remote_id
-
     # The author of the Comment, if the author is a User.
     attr_accessor :user
 
@@ -37,9 +34,6 @@ module MergeTicketingClient
     # Whether or not the comment is internal.
     attr_accessor :is_private
 
-    # When the third party's comment was created.
-    attr_accessor :remote_created_at
-
     attr_accessor :integration_params
 
     attr_accessor :linked_account_params
@@ -47,14 +41,12 @@ module MergeTicketingClient
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'remote_id' => :'remote_id',
         :'user' => :'user',
         :'contact' => :'contact',
         :'body' => :'body',
         :'html_body' => :'html_body',
         :'ticket' => :'ticket',
         :'is_private' => :'is_private',
-        :'remote_created_at' => :'remote_created_at',
         :'integration_params' => :'integration_params',
         :'linked_account_params' => :'linked_account_params'
       }
@@ -68,14 +60,12 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'remote_id' => :'String',
         :'user' => :'String',
         :'contact' => :'String',
         :'body' => :'String',
         :'html_body' => :'String',
         :'ticket' => :'String',
         :'is_private' => :'Boolean',
-        :'remote_created_at' => :'Time',
         :'integration_params' => :'Hash<String, Object>',
         :'linked_account_params' => :'Hash<String, Object>'
       }
@@ -84,14 +74,12 @@ module MergeTicketingClient
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'remote_id',
         :'user',
         :'contact',
         :'body',
         :'html_body',
         :'ticket',
         :'is_private',
-        :'remote_created_at',
         :'integration_params',
         :'linked_account_params'
       ])
@@ -111,10 +99,6 @@ module MergeTicketingClient
         end
         h[k.to_sym] = v
       }
-
-      if attributes.key?(:'remote_id')
-        self.remote_id = attributes[:'remote_id']
-      end
 
       if attributes.key?(:'user')
         self.user = attributes[:'user']
@@ -138,10 +122,6 @@ module MergeTicketingClient
 
       if attributes.key?(:'is_private')
         self.is_private = attributes[:'is_private']
-      end
-
-      if attributes.key?(:'remote_created_at')
-        self.remote_created_at = attributes[:'remote_created_at']
       end
 
       if attributes.key?(:'integration_params')
@@ -175,14 +155,12 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          remote_id == o.remote_id &&
           user == o.user &&
           contact == o.contact &&
           body == o.body &&
           html_body == o.html_body &&
           ticket == o.ticket &&
           is_private == o.is_private &&
-          remote_created_at == o.remote_created_at &&
           integration_params == o.integration_params &&
           linked_account_params == o.linked_account_params
     end
@@ -196,7 +174,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [remote_id, user, contact, body, html_body, ticket, is_private, remote_created_at, integration_params, linked_account_params].hash
+      [user, contact, body, html_body, ticket, is_private, integration_params, linked_account_params].hash
     end
 
     # Builds the object from hash

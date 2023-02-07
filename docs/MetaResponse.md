@@ -2,12 +2,12 @@
 
 ## Properties
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **request_schema** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  |  |
-| **status** | [**LinkedAccountStatus**](LinkedAccountStatus.md) |  | [optional] |
-| **has_conditional_params** | **Boolean** |  |  |
-| **has_required_linked_account_params** | **Boolean** |  |  |
+| Name                                   | Type                                              | Description | Notes      |
+| -------------------------------------- | ------------------------------------------------- | ----------- | ---------- |
+| **request_schema**                     | [**Hash&lt;String, Object&gt;**](Object.md)       |             |            |
+| **status**                             | [**LinkedAccountStatus**](LinkedAccountStatus.md) |             | [optional] |
+| **has_conditional_params**             | **Boolean**                                       |             |            |
+| **has_required_linked_account_params** | **Boolean**                                       |             |            |
 
 ## Example
 
@@ -21,4 +21,3 @@ instance = MergeTicketingClient::MetaResponse.new(
   has_required_linked_account_params: null
 )
 ```
-

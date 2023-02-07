@@ -16,9 +16,6 @@ require 'time'
 module MergeTicketingClient
   # # The Attachment Object ### Description The `Attachment` object is used to represent an attachment for a ticket.  ### Usage Example TODO
   class AttachmentRequest
-    # The third-party API ID of the matching object.
-    attr_accessor :remote_id
-
     # The attachment's name.
     attr_accessor :file_name
 
@@ -34,9 +31,6 @@ module MergeTicketingClient
     # The user who uploaded the attachment.
     attr_accessor :uploaded_by
 
-    # When the third party's attachment was created.
-    attr_accessor :remote_created_at
-
     attr_accessor :integration_params
 
     attr_accessor :linked_account_params
@@ -44,13 +38,11 @@ module MergeTicketingClient
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'remote_id' => :'remote_id',
         :'file_name' => :'file_name',
         :'ticket' => :'ticket',
         :'file_url' => :'file_url',
         :'content_type' => :'content_type',
         :'uploaded_by' => :'uploaded_by',
-        :'remote_created_at' => :'remote_created_at',
         :'integration_params' => :'integration_params',
         :'linked_account_params' => :'linked_account_params'
       }
@@ -64,13 +56,11 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'remote_id' => :'String',
         :'file_name' => :'String',
         :'ticket' => :'String',
         :'file_url' => :'String',
         :'content_type' => :'String',
         :'uploaded_by' => :'String',
-        :'remote_created_at' => :'Time',
         :'integration_params' => :'Hash<String, Object>',
         :'linked_account_params' => :'Hash<String, Object>'
       }
@@ -79,13 +69,11 @@ module MergeTicketingClient
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'remote_id',
         :'file_name',
         :'ticket',
         :'file_url',
         :'content_type',
         :'uploaded_by',
-        :'remote_created_at',
         :'integration_params',
         :'linked_account_params'
       ])
@@ -106,10 +94,6 @@ module MergeTicketingClient
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'remote_id')
-        self.remote_id = attributes[:'remote_id']
-      end
-
       if attributes.key?(:'file_name')
         self.file_name = attributes[:'file_name']
       end
@@ -128,10 +112,6 @@ module MergeTicketingClient
 
       if attributes.key?(:'uploaded_by')
         self.uploaded_by = attributes[:'uploaded_by']
-      end
-
-      if attributes.key?(:'remote_created_at')
-        self.remote_created_at = attributes[:'remote_created_at']
       end
 
       if attributes.key?(:'integration_params')
@@ -165,13 +145,11 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          remote_id == o.remote_id &&
           file_name == o.file_name &&
           ticket == o.ticket &&
           file_url == o.file_url &&
           content_type == o.content_type &&
           uploaded_by == o.uploaded_by &&
-          remote_created_at == o.remote_created_at &&
           integration_params == o.integration_params &&
           linked_account_params == o.linked_account_params
     end
@@ -185,7 +163,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [remote_id, file_name, ticket, file_url, content_type, uploaded_by, remote_created_at, integration_params, linked_account_params].hash
+      [file_name, ticket, file_url, content_type, uploaded_by, integration_params, linked_account_params].hash
     end
 
     # Builds the object from hash

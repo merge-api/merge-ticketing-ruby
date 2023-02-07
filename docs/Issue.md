@@ -2,16 +2,16 @@
 
 ## Properties
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **id** | **String** |  | [optional][readonly] |
-| **status** | [**IssueStatusEnum**](IssueStatusEnum.md) |  | [optional] |
-| **error_description** | **String** |  |  |
-| **end_user** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional][readonly] |
-| **first_incident_time** | **Time** |  | [optional] |
-| **last_incident_time** | **Time** |  | [optional] |
-| **is_muted** | **Boolean** |  | [optional][readonly] |
-| **error_details** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional][readonly] |
+| Name                    | Type                                        | Description | Notes                |
+| ----------------------- | ------------------------------------------- | ----------- | -------------------- |
+| **id**                  | **String**                                  |             | [optional][readonly] |
+| **status**              | [**IssueStatusEnum**](IssueStatusEnum.md)   |             | [optional]           |
+| **error_description**   | **String**                                  |             |                      |
+| **end_user**            | [**Hash&lt;String, Object&gt;**](Object.md) |             | [optional][readonly] |
+| **first_incident_time** | **Time**                                    |             | [optional]           |
+| **last_incident_time**  | **Time**                                    |             | [optional]           |
+| **is_muted**            | **Boolean**                                 |             | [optional][readonly] |
+| **error_details**       | [**Hash&lt;String, Object&gt;**](Object.md) |             | [optional][readonly] |
 
 ## Example
 
@@ -29,4 +29,3 @@ instance = MergeTicketingClient::Issue.new(
   error_details: [&quot;Missing employee permissions.&quot;,&quot;Missing time off permissions.&quot;]
 )
 ```
-

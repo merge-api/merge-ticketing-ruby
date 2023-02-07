@@ -2,18 +2,18 @@
 
 ## Properties
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **id** | **String** |  | [optional][readonly] |
-| **remote_id** | **String** | The third-party API ID of the matching object. | [optional] |
-| **name** | **String** | The contact&#39;s name. | [optional] |
-| **email_address** | **String** | The contact&#39;s email address. | [optional] |
-| **phone_number** | **String** | The contact&#39;s phone number. | [optional] |
-| **details** | **String** | The contact&#39;s details. | [optional] |
-| **account** | **String** | The contact&#39;s account. | [optional] |
-| **remote_data** | [**Array&lt;RemoteData&gt;**](RemoteData.md) |  | [optional][readonly] |
-| **remote_was_deleted** | **Boolean** | Indicates whether or not this object has been deleted by third party webhooks. | [optional][readonly] |
-| **field_mappings** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional][readonly] |
+| Name                   | Type                                         | Description                                                                    | Notes                |
+| ---------------------- | -------------------------------------------- | ------------------------------------------------------------------------------ | -------------------- |
+| **id**                 | **String**                                   |                                                                                | [optional][readonly] |
+| **remote_id**          | **String**                                   | The third-party API ID of the matching object.                                 | [optional]           |
+| **name**               | **String**                                   | The contact&#39;s name.                                                        | [optional]           |
+| **email_address**      | **String**                                   | The contact&#39;s email address.                                               | [optional]           |
+| **phone_number**       | **String**                                   | The contact&#39;s phone number.                                                | [optional]           |
+| **details**            | **String**                                   | The contact&#39;s details.                                                     | [optional]           |
+| **account**            | **String**                                   | The contact&#39;s account.                                                     | [optional]           |
+| **remote_data**        | [**Array&lt;RemoteData&gt;**](RemoteData.md) |                                                                                | [optional][readonly] |
+| **remote_was_deleted** | **Boolean**                                  | Indicates whether or not this object has been deleted by third party webhooks. | [optional][readonly] |
+| **field_mappings**     | [**Hash&lt;String, Object&gt;**](Object.md)  |                                                                                | [optional][readonly] |
 
 ## Example
 
@@ -33,4 +33,3 @@ instance = MergeTicketingClient::Contact.new(
   field_mappings: {&quot;organization_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;},&quot;linked_account_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;}}
 )
 ```
-

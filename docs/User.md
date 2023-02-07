@@ -2,18 +2,18 @@
 
 ## Properties
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **id** | **String** |  | [optional][readonly] |
-| **remote_id** | **String** | The third-party API ID of the matching object. | [optional] |
-| **name** | **String** | The user&#39;s name. | [optional] |
-| **email_address** | **String** | The user&#39;s email address. | [optional] |
-| **is_active** | **Boolean** | Whether or not the user is active. | [optional] |
-| **teams** | **Array&lt;String&gt;** |  | [optional] |
-| **avatar** | **String** | The user&#39;s avatar picture. | [optional] |
-| **remote_data** | [**Array&lt;RemoteData&gt;**](RemoteData.md) |  | [optional][readonly] |
-| **remote_was_deleted** | **Boolean** | Indicates whether or not this object has been deleted by third party webhooks. | [optional][readonly] |
-| **field_mappings** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional][readonly] |
+| Name                   | Type                                         | Description                                                                    | Notes                |
+| ---------------------- | -------------------------------------------- | ------------------------------------------------------------------------------ | -------------------- |
+| **id**                 | **String**                                   |                                                                                | [optional][readonly] |
+| **remote_id**          | **String**                                   | The third-party API ID of the matching object.                                 | [optional]           |
+| **name**               | **String**                                   | The user&#39;s name.                                                           | [optional]           |
+| **email_address**      | **String**                                   | The user&#39;s email address.                                                  | [optional]           |
+| **is_active**          | **Boolean**                                  | Whether or not the user is active.                                             | [optional]           |
+| **teams**              | **Array&lt;String&gt;**                      |                                                                                | [optional]           |
+| **avatar**             | **String**                                   | The user&#39;s avatar picture.                                                 | [optional]           |
+| **remote_data**        | [**Array&lt;RemoteData&gt;**](RemoteData.md) |                                                                                | [optional][readonly] |
+| **remote_was_deleted** | **Boolean**                                  | Indicates whether or not this object has been deleted by third party webhooks. | [optional][readonly] |
+| **field_mappings**     | [**Hash&lt;String, Object&gt;**](Object.md)  |                                                                                | [optional][readonly] |
 
 ## Example
 
@@ -33,4 +33,3 @@ instance = MergeTicketingClient::User.new(
   field_mappings: {&quot;organization_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;},&quot;linked_account_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;}}
 )
 ```
-

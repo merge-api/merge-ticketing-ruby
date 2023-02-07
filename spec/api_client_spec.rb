@@ -223,4 +223,16 @@ describe MergeTicketingClient::ApiClient do
       expect(api_client.sanitize_filename('.\sun.gif')).to eq('sun.gif')
     end
   end
+
+  describe '#deserialize_user_remote_data' do 
+    let(:api_client) { MergeTicketingClient::ApiClient.new }
+    let(:instance) { MergeTicketingClient::RemoteData.new(data: '5585803338900', path: "/v2/users")}
+    let(:built_user) { MergeTicketingClient::RemoteData.build_from_hash({:path=>"/v2/users", :data=>"5585803338900"})}
+
+    it 'works' do
+      puts instance.to_hash
+
+      # expect(built_user).to eq('sun')
+    end
+  end
 end

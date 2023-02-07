@@ -80,6 +80,8 @@ module MergeTicketingClient
 
     attr_accessor :field_mappings
 
+    attr_accessor :remote_fields
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -106,7 +108,8 @@ module MergeTicketingClient
         :'remote_was_deleted' => :'remote_was_deleted',
         :'ticket_url' => :'ticket_url',
         :'priority' => :'priority',
-        :'field_mappings' => :'field_mappings'
+        :'field_mappings' => :'field_mappings',
+        :'remote_fields' => :'remote_fields'
       }
     end
 
@@ -141,7 +144,8 @@ module MergeTicketingClient
         :'remote_was_deleted' => :'Boolean',
         :'ticket_url' => :'String',
         :'priority' => :'PriorityEnum',
-        :'field_mappings' => :'Hash<String, Object>'
+        :'field_mappings' => :'Hash<String, Object>',
+        :'remote_fields' => :'Array<RemoteField>'
       }
     end
 
@@ -165,7 +169,7 @@ module MergeTicketingClient
         :'remote_data',
         :'ticket_url',
         :'priority',
-        :'field_mappings'
+        :'field_mappings',
       ])
     end
 
@@ -291,6 +295,12 @@ module MergeTicketingClient
           self.field_mappings = value
         end
       end
+
+      if attributes.key?(:'remote_fields')
+        if (value = attributes[:'remote_fields']).is_a?(Array)
+          self.remote_fields = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -349,7 +359,8 @@ module MergeTicketingClient
           remote_was_deleted == o.remote_was_deleted &&
           ticket_url == o.ticket_url &&
           priority == o.priority &&
-          field_mappings == o.field_mappings
+          field_mappings == o.field_mappings &&
+          remote_fields == o.remote_fields
     end
 
     # @see the `==` method
@@ -361,7 +372,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, name, assignees, creator, due_date, status, description, project, collections, ticket_type, account, contact, parent_ticket, attachments, tags, remote_created_at, remote_updated_at, completed_at, remote_data, remote_was_deleted, ticket_url, priority, field_mappings].hash
+      [id, remote_id, name, assignees, creator, due_date, status, description, project, collections, ticket_type, account, contact, parent_ticket, attachments, tags, remote_created_at, remote_updated_at, completed_at, remote_data, remote_was_deleted, ticket_url, priority, field_mappings, remote_fields].hash
     end
 
     # Builds the object from hash

@@ -66,9 +66,7 @@ module MergeTicketingClient
       end
 
       if attributes.key?(:'data')
-        if (value = attributes[:'data']).is_a?(Hash)
-          self.data = value
-        end
+        self.data = attributes[:'data']
       end
     end
 
@@ -171,10 +169,14 @@ module MergeTicketingClient
       when /\AHash<(?<k_type>.+?), (?<v_type>.+)>\z/
         k_type = Regexp.last_match[:k_type]
         v_type = Regexp.last_match[:v_type]
+        if value.is_a? Enumerable
         {}.tap do |hash|
-          value.each do |k, v|
-            hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
+            value.each do |k, v|
+              hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
+            end
           end
+        else
+          _deserialize(v_type, value)
         end
       else # model
         # models (e.g. Pet) or oneOf

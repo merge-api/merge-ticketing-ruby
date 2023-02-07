@@ -52,12 +52,6 @@ module MergeTicketingClient
 
     attr_accessor :tags
 
-    # When the third party's ticket was created.
-    attr_accessor :remote_created_at
-
-    # When the third party's ticket was updated.
-    attr_accessor :remote_updated_at
-
     # When the ticket was completed.
     attr_accessor :completed_at
 
@@ -87,8 +81,6 @@ module MergeTicketingClient
         :'contact' => :'contact',
         :'parent_ticket' => :'parent_ticket',
         :'tags' => :'tags',
-        :'remote_created_at' => :'remote_created_at',
-        :'remote_updated_at' => :'remote_updated_at',
         :'completed_at' => :'completed_at',
         :'ticket_url' => :'ticket_url',
         :'priority' => :'priority',
@@ -118,8 +110,6 @@ module MergeTicketingClient
         :'contact' => :'String',
         :'parent_ticket' => :'String',
         :'tags' => :'Array<String>',
-        :'remote_created_at' => :'Time',
-        :'remote_updated_at' => :'Time',
         :'completed_at' => :'Time',
         :'ticket_url' => :'String',
         :'priority' => :'PriorityEnum',
@@ -141,8 +131,6 @@ module MergeTicketingClient
         :'account',
         :'contact',
         :'parent_ticket',
-        :'remote_created_at',
-        :'remote_updated_at',
         :'completed_at',
         :'ticket_url',
         :'priority',
@@ -224,14 +212,6 @@ module MergeTicketingClient
         end
       end
 
-      if attributes.key?(:'remote_created_at')
-        self.remote_created_at = attributes[:'remote_created_at']
-      end
-
-      if attributes.key?(:'remote_updated_at')
-        self.remote_updated_at = attributes[:'remote_updated_at']
-      end
-
       if attributes.key?(:'completed_at')
         self.completed_at = attributes[:'completed_at']
       end
@@ -303,8 +283,6 @@ module MergeTicketingClient
           contact == o.contact &&
           parent_ticket == o.parent_ticket &&
           tags == o.tags &&
-          remote_created_at == o.remote_created_at &&
-          remote_updated_at == o.remote_updated_at &&
           completed_at == o.completed_at &&
           ticket_url == o.ticket_url &&
           priority == o.priority &&
@@ -321,7 +299,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, assignees, creator, due_date, status, description, project, collections, ticket_type, account, contact, parent_ticket, tags, remote_created_at, remote_updated_at, completed_at, ticket_url, priority, integration_params, linked_account_params].hash
+      [name, assignees, creator, due_date, status, description, project, collections, ticket_type, account, contact, parent_ticket, tags, completed_at, ticket_url, priority, integration_params, linked_account_params].hash
     end
 
     # Builds the object from hash

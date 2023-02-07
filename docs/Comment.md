@@ -2,20 +2,20 @@
 
 ## Properties
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **id** | **String** |  | [optional][readonly] |
-| **remote_id** | **String** | The third-party API ID of the matching object. | [optional] |
-| **user** | **String** | The author of the Comment, if the author is a User. | [optional] |
-| **contact** | **String** | The author of the Comment, if the author is a Contact. | [optional] |
-| **body** | **String** | The comment&#39;s text body. | [optional] |
-| **html_body** | **String** | The comment&#39;s text body formatted as html. | [optional] |
-| **ticket** | **String** | The ticket associated with the comment.  | [optional] |
-| **is_private** | **Boolean** | Whether or not the comment is internal. | [optional] |
-| **remote_created_at** | **Time** | When the third party&#39;s comment was created. | [optional] |
-| **remote_data** | [**Array&lt;RemoteData&gt;**](RemoteData.md) |  | [optional][readonly] |
-| **remote_was_deleted** | **Boolean** |  | [optional][readonly] |
-| **field_mappings** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional][readonly] |
+| Name                   | Type                                         | Description                                            | Notes                |
+| ---------------------- | -------------------------------------------- | ------------------------------------------------------ | -------------------- |
+| **id**                 | **String**                                   |                                                        | [optional][readonly] |
+| **remote_id**          | **String**                                   | The third-party API ID of the matching object.         | [optional]           |
+| **user**               | **String**                                   | The author of the Comment, if the author is a User.    | [optional]           |
+| **contact**            | **String**                                   | The author of the Comment, if the author is a Contact. | [optional]           |
+| **body**               | **String**                                   | The comment&#39;s text body.                           | [optional]           |
+| **html_body**          | **String**                                   | The comment&#39;s text body formatted as html.         | [optional]           |
+| **ticket**             | **String**                                   | The ticket associated with the comment.                | [optional]           |
+| **is_private**         | **Boolean**                                  | Whether or not the comment is internal.                | [optional]           |
+| **remote_created_at**  | **Time**                                     | When the third party&#39;s comment was created.        | [optional]           |
+| **remote_data**        | [**Array&lt;RemoteData&gt;**](RemoteData.md) |                                                        | [optional][readonly] |
+| **remote_was_deleted** | **Boolean**                                  |                                                        | [optional][readonly] |
+| **field_mappings**     | [**Hash&lt;String, Object&gt;**](Object.md)  |                                                        | [optional][readonly] |
 
 ## Example
 
@@ -37,4 +37,3 @@ instance = MergeTicketingClient::Comment.new(
   field_mappings: {&quot;organization_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;},&quot;linked_account_defined_targets&quot;:{&quot;custom_key&quot;:&quot;custom_value&quot;}}
 )
 ```
-
