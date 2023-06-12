@@ -2,18 +2,15 @@
 
 All URIs are relative to *https://api.merge.dev/api/ticketing/v1*
 
-| Method | HTTP request | Description |
-| ------ | ------------ | ----------- |
-| [**sync_status_list**](SyncStatusApi.md#sync_status_list) | **GET** /sync-status |  |
-
+| Method                                                    | HTTP request         | Description |
+| --------------------------------------------------------- | -------------------- | ----------- |
+| [**sync_status_list**](SyncStatusApi.md#sync_status_list) | **GET** /sync-status |             |
 
 ## sync_status_list
 
 > <PaginatedSyncStatusList> sync_status_list(x_account_token, opts)
 
-
-
-Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
+Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`, `PARTIALLY_SYNCED`
 
 ### Examples
 
@@ -36,7 +33,6 @@ opts = {
 }
 
 begin
-  
   result = api_instance.sync_status_list(x_account_token, opts)
   p result
 rescue MergeTicketingClient::ApiError => e
@@ -52,7 +48,6 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  
   data, status_code, headers = api_instance.sync_status_list_with_http_info(x_account_token, opts)
   p status_code # => 2xx
   p headers # => { ... }
@@ -82,4 +77,3 @@ end
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
-
