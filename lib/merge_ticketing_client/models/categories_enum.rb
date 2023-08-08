@@ -21,6 +21,7 @@ module MergeTicketingClient
     TICKETING = "ticketing".freeze
     CRM = "crm".freeze
     MKTG = "mktg".freeze
+    FILESTORAGE = "filestorage".freeze
 
     MERGE_NONSTANDARD_VALUE = "MERGE_NONSTANDARD_VALUE".freeze
 
@@ -32,7 +33,7 @@ module MergeTicketingClient
     # @return [String] The enum value
     def build_from_hash(value)
       @raw_value = value
-      if ["hris", "ats", "accounting", "ticketing", "crm", "mktg", ].include? value
+      if ["hris", "ats", "accounting", "ticketing", "crm", "mktg", "filestorage", ].include? value
         @value = value
       else
         @value = MERGE_NONSTANDARD_VALUE

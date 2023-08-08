@@ -5,6 +5,7 @@ All URIs are relative to *https://api.merge.dev/api/ticketing/v1*
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
 | [**attachments_create**](AttachmentsApi.md#attachments_create) | **POST** /attachments |  |
+| [**attachments_download_retrieve**](AttachmentsApi.md#attachments_download_retrieve) | **GET** /attachments/{id}/download |  |
 | [**attachments_list**](AttachmentsApi.md#attachments_list) | **GET** /attachments |  |
 | [**attachments_meta_post_retrieve**](AttachmentsApi.md#attachments_meta_post_retrieve) | **GET** /attachments/meta/post |  |
 | [**attachments_retrieve**](AttachmentsApi.md#attachments_retrieve) | **GET** /attachments/{id} |  |
@@ -89,6 +90,79 @@ end
 - **Accept**: application/json
 
 
+## attachments_download_retrieve
+
+> File attachments_download_retrieve(x_account_token, id)
+
+
+
+Returns an `Attachment` object with the given `id`.
+
+### Examples
+
+```ruby
+require 'time'
+require 'merge_ticketing_client'
+# setup authorization
+MergeTicketingClient.configure do |config|
+  # Configure API key authorization: tokenAuth
+  config.api_key['tokenAuth'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['tokenAuth'] = 'Bearer'
+end
+
+api_instance = MergeTicketingClient::AttachmentsApi.new
+x_account_token = 'x_account_token_example' # String | Token identifying the end user.
+id = TODO # String | 
+
+begin
+  
+  result = api_instance.attachments_download_retrieve(x_account_token, id)
+  p result
+rescue MergeTicketingClient::ApiError => e
+  puts "Error when calling AttachmentsApi->attachments_download_retrieve: #{e}"
+end
+```
+
+#### Using the attachments_download_retrieve_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(File, Integer, Hash)> attachments_download_retrieve_with_http_info(x_account_token, id)
+
+```ruby
+begin
+  
+  data, status_code, headers = api_instance.attachments_download_retrieve_with_http_info(x_account_token, id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => File
+rescue MergeTicketingClient::ApiError => e
+  puts "Error when calling AttachmentsApi->attachments_download_retrieve_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **x_account_token** | **String** | Token identifying the end user. |  |
+| **id** | [**String**](.md) |  |  |
+
+### Return type
+
+**File**
+
+### Authorization
+
+[tokenAuth](../README.md#tokenAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: */*
+
+
 ## attachments_list
 
 > <PaginatedAttachmentList> attachments_list(x_account_token, opts)
@@ -119,9 +193,10 @@ opts = {
   expand: 'ticket', # String | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   include_deleted_data: true, # Boolean | Whether to include data that was marked as deleted by third party webhooks.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
-  modified_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects modified after this datetime.
-  modified_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects modified before this datetime.
+  modified_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, only objects synced by Merge after this date time will be returned.
+  modified_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, only objects synced by Merge before this date time will be returned.
   page_size: 56, # Integer | Number of results to return per page.
+  remote_created_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return attachments created in the third party platform after this datetime.
   remote_id: 'remote_id_example', # String | The API provider's ID for the given object.
   ticket_id: 'ticket_id_example' # String | If provided, will only return comments for this ticket.
 }
@@ -164,9 +239,10 @@ end
 | **expand** | **String** | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces. | [optional] |
 | **include_deleted_data** | **Boolean** | Whether to include data that was marked as deleted by third party webhooks. | [optional] |
 | **include_remote_data** | **Boolean** | Whether to include the original data Merge fetched from the third-party to produce these models. | [optional] |
-| **modified_after** | **Time** | If provided, will only return objects modified after this datetime. | [optional] |
-| **modified_before** | **Time** | If provided, will only return objects modified before this datetime. | [optional] |
+| **modified_after** | **Time** | If provided, only objects synced by Merge after this date time will be returned. | [optional] |
+| **modified_before** | **Time** | If provided, only objects synced by Merge before this date time will be returned. | [optional] |
 | **page_size** | **Integer** | Number of results to return per page. | [optional] |
+| **remote_created_after** | **Time** | If provided, will only return attachments created in the third party platform after this datetime. | [optional] |
 | **remote_id** | **String** | The API provider&#39;s ID for the given object. | [optional] |
 | **ticket_id** | **String** | If provided, will only return comments for this ticket. | [optional] |
 

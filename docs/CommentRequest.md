@@ -2,16 +2,16 @@
 
 ## Properties
 
-| Name                      | Type                                        | Description                                            | Notes      |
-| ------------------------- | ------------------------------------------- | ------------------------------------------------------ | ---------- |
-| **user**                  | **String**                                  | The author of the Comment, if the author is a User.    | [optional] |
-| **contact**               | **String**                                  | The author of the Comment, if the author is a Contact. | [optional] |
-| **body**                  | **String**                                  | The comment&#39;s text body.                           | [optional] |
-| **html_body**             | **String**                                  | The comment&#39;s text body formatted as html.         | [optional] |
-| **ticket**                | **String**                                  | The ticket associated with the comment.                | [optional] |
-| **is_private**            | **Boolean**                                 | Whether or not the comment is internal.                | [optional] |
-| **integration_params**    | [**Hash&lt;String, Object&gt;**](Object.md) |                                                        | [optional] |
-| **linked_account_params** | [**Hash&lt;String, Object&gt;**](Object.md) |                                                        | [optional] |
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **user** | **String** | The author of the Comment, if the author is a User. | [optional] |
+| **contact** | **String** | The author of the Comment, if the author is a Contact. | [optional] |
+| **body** | **String** | The comment&#39;s text body. | [optional] |
+| **html_body** | **String** | The comment&#39;s text body formatted as html. | [optional] |
+| **ticket** | **String** | The ticket associated with the comment.  | [optional] |
+| **is_private** | **Boolean** | Whether or not the comment is internal. | [optional] |
+| **integration_params** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional] |
+| **linked_account_params** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional] |
 
 ## Example
 
@@ -29,3 +29,4 @@ instance = MergeTicketingClient::CommentRequest.new(
   linked_account_params: {&quot;unique_linked_account_field&quot;:&quot;unique_linked_account_field_value&quot;}
 )
 ```
+

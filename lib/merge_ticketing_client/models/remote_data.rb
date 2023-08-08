@@ -36,13 +36,14 @@ module MergeTicketingClient
     def self.openapi_types
       {
         :'path' => :'String',
-        :'data' => :'Hash<String, Object>'
+        :'data' => :'Object'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'data'
       ])
     end
 
@@ -169,14 +170,10 @@ module MergeTicketingClient
       when /\AHash<(?<k_type>.+?), (?<v_type>.+)>\z/
         k_type = Regexp.last_match[:k_type]
         v_type = Regexp.last_match[:v_type]
-        if value.is_a? Hash
-          {}.tap do |hash|
-              value.each do |k, v|
-                hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
-              end
-            end
-        else
-          _deserialize(v_type, value)
+        {}.tap do |hash|
+          value.each do |k, v|
+            hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
+          end
         end
       else # model
         # models (e.g. Pet) or oneOf

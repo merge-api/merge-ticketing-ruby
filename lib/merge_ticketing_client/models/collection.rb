@@ -27,18 +27,24 @@ module MergeTicketingClient
     # The collection's description.
     attr_accessor :description
 
-    # The collection's type.
+    # The collection's type.  * `LIST` - LIST * `PROJECT` - PROJECT
     attr_accessor :collection_type
 
     # The parent collection for this collection.
     attr_accessor :parent_collection
 
-    attr_accessor :remote_data
-
     # Indicates whether or not this object has been deleted by third party webhooks.
     attr_accessor :remote_was_deleted
 
+    # The level of access a User has to the Collection and its sub-objects.  * `PRIVATE` - PRIVATE * `COMPANY` - COMPANY * `PUBLIC` - PUBLIC
+    attr_accessor :access_level
+
+    # This is the datetime that this object was last updated by Merge
+    attr_accessor :modified_at
+
     attr_accessor :field_mappings
+
+    attr_accessor :remote_data
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -49,9 +55,11 @@ module MergeTicketingClient
         :'description' => :'description',
         :'collection_type' => :'collection_type',
         :'parent_collection' => :'parent_collection',
-        :'remote_data' => :'remote_data',
         :'remote_was_deleted' => :'remote_was_deleted',
-        :'field_mappings' => :'field_mappings'
+        :'access_level' => :'access_level',
+        :'modified_at' => :'modified_at',
+        :'field_mappings' => :'field_mappings',
+        :'remote_data' => :'remote_data'
       }
     end
 
@@ -69,9 +77,11 @@ module MergeTicketingClient
         :'description' => :'String',
         :'collection_type' => :'CollectionTypeEnum',
         :'parent_collection' => :'String',
-        :'remote_data' => :'Array<RemoteData>',
         :'remote_was_deleted' => :'Boolean',
-        :'field_mappings' => :'Hash<String, Object>'
+        :'access_level' => :'AccessLevelEnum',
+        :'modified_at' => :'Time',
+        :'field_mappings' => :'Hash<String, Object>',
+        :'remote_data' => :'Array<RemoteData>'
       }
     end
 
@@ -83,8 +93,9 @@ module MergeTicketingClient
         :'description',
         :'collection_type',
         :'parent_collection',
-        :'remote_data',
-        :'field_mappings'
+        :'access_level',
+        :'field_mappings',
+        :'remote_data'
       ])
     end
 
@@ -127,19 +138,27 @@ module MergeTicketingClient
         self.parent_collection = attributes[:'parent_collection']
       end
 
-      if attributes.key?(:'remote_data')
-        if (value = attributes[:'remote_data']).is_a?(Array)
-          self.remote_data = value
-        end
-      end
-
       if attributes.key?(:'remote_was_deleted')
         self.remote_was_deleted = attributes[:'remote_was_deleted']
+      end
+
+      if attributes.key?(:'access_level')
+        self.access_level = attributes[:'access_level']
+      end
+
+      if attributes.key?(:'modified_at')
+        self.modified_at = attributes[:'modified_at']
       end
 
       if attributes.key?(:'field_mappings')
         if (value = attributes[:'field_mappings']).is_a?(Hash)
           self.field_mappings = value
+        end
+      end
+
+      if attributes.key?(:'remote_data')
+        if (value = attributes[:'remote_data']).is_a?(Array)
+          self.remote_data = value
         end
       end
     end
@@ -168,9 +187,11 @@ module MergeTicketingClient
           description == o.description &&
           collection_type == o.collection_type &&
           parent_collection == o.parent_collection &&
-          remote_data == o.remote_data &&
           remote_was_deleted == o.remote_was_deleted &&
-          field_mappings == o.field_mappings
+          access_level == o.access_level &&
+          modified_at == o.modified_at &&
+          field_mappings == o.field_mappings &&
+          remote_data == o.remote_data
     end
 
     # @see the `==` method
@@ -182,7 +203,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, name, description, collection_type, parent_collection, remote_data, remote_was_deleted, field_mappings].hash
+      [id, remote_id, name, description, collection_type, parent_collection, remote_was_deleted, access_level, modified_at, field_mappings, remote_data].hash
     end
 
     # Builds the object from hash

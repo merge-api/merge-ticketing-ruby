@@ -104,9 +104,10 @@ module MergeTicketingClient
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
-    # @option opts [Time] :modified_after If provided, will only return objects modified after this datetime.
-    # @option opts [Time] :modified_before If provided, will only return objects modified before this datetime.
+    # @option opts [Time] :modified_after If provided, only objects synced by Merge after this date time will be returned.
+    # @option opts [Time] :modified_before If provided, only objects synced by Merge before this date time will be returned.
     # @option opts [Integer] :page_size Number of results to return per page.
+    # @option opts [Time] :remote_created_after If provided, will only return Comments created in the third party platform after this datetime.
     # @option opts [String] :remote_id The API provider&#39;s ID for the given object.
     # @option opts [String] :ticket_id If provided, will only return comments for this ticket.
     # @return [PaginatedCommentList]
@@ -124,9 +125,10 @@ module MergeTicketingClient
     # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
     # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
     # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
-    # @option opts [Time] :modified_after If provided, will only return objects modified after this datetime.
-    # @option opts [Time] :modified_before If provided, will only return objects modified before this datetime.
+    # @option opts [Time] :modified_after If provided, only objects synced by Merge after this date time will be returned.
+    # @option opts [Time] :modified_before If provided, only objects synced by Merge before this date time will be returned.
     # @option opts [Integer] :page_size Number of results to return per page.
+    # @option opts [Time] :remote_created_after If provided, will only return Comments created in the third party platform after this datetime.
     # @option opts [String] :remote_id The API provider&#39;s ID for the given object.
     # @option opts [String] :ticket_id If provided, will only return comments for this ticket.
     # @return [Array<(PaginatedCommentList, Integer, Hash)>] PaginatedCommentList data, response status code and response headers
@@ -156,6 +158,7 @@ module MergeTicketingClient
       query_params[:'modified_after'] = opts[:'modified_after'] if !opts[:'modified_after'].nil?
       query_params[:'modified_before'] = opts[:'modified_before'] if !opts[:'modified_before'].nil?
       query_params[:'page_size'] = opts[:'page_size'] if !opts[:'page_size'].nil?
+      query_params[:'remote_created_after'] = opts[:'remote_created_after'] if !opts[:'remote_created_after'].nil?
       query_params[:'remote_id'] = opts[:'remote_id'] if !opts[:'remote_id'].nil?
       query_params[:'ticket_id'] = opts[:'ticket_id'] if !opts[:'ticket_id'].nil?
 

@@ -2,10 +2,10 @@
 
 ## Properties
 
-| Name     | Type                                        | Description | Notes      |
-| -------- | ------------------------------------------- | ----------- | ---------- |
-| **path** | **String**                                  |             |            |
-| **data** | [**Hash&lt;String, Object&gt;**](Object.md) |             | [optional] |
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **path** | **String** |  |  |
+| **data** | [**AnyType**](.md) |  | [optional][readonly] |
 
 ## Example
 
@@ -17,3 +17,4 @@ instance = MergeTicketingClient::RemoteData.new(
   data: null
 )
 ```
+

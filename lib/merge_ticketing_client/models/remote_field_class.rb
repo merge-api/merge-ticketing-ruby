@@ -15,11 +15,15 @@ require 'time'
 
 module MergeTicketingClient
   class RemoteFieldClass
+    attr_accessor :id
+
     attr_accessor :display_name
 
     attr_accessor :remote_key_name
 
     attr_accessor :description
+
+    attr_accessor :is_custom
 
     attr_accessor :is_required
 
@@ -31,26 +35,19 @@ module MergeTicketingClient
 
     attr_accessor :item_schema
 
-    attr_accessor :is_custom
-
-    attr_accessor :id
-
-    attr_accessor :remote_fields
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'id' => :'id',
         :'display_name' => :'display_name',
         :'remote_key_name' => :'remote_key_name',
         :'description' => :'description',
+        :'is_custom' => :'is_custom',
         :'is_required' => :'is_required',
         :'field_type' => :'field_type',
         :'field_format' => :'field_format',
         :'field_choices' => :'field_choices',
-        :'item_schema' => :'item_schema',
-        :'is_custom' => :'is_custom',
-        :'id' => :'id',
-        :'remote_fields' => :'remote_fields'
+        :'item_schema' => :'item_schema'
       }
     end
 
@@ -62,29 +59,22 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'id' => :'String',
         :'display_name' => :'String',
         :'remote_key_name' => :'String',
         :'description' => :'String',
+        :'is_custom' => :'Boolean',
         :'is_required' => :'Boolean',
         :'field_type' => :'FieldTypeEnum',
         :'field_format' => :'FieldFormatEnum',
         :'field_choices' => :'Array<String>',
-        :'item_schema' => :'RemoteFieldClassItemSchema',
-        :'is_custom' => :'Boolean',
-        :'id' => :'String',
-        :'remote_fields' => :'Array<RemoteField>'
+        :'item_schema' => :'ItemSchema'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'display_name',
-        :'remote_key_name',
-        :'description',
-        :'field_choices',
-        :'item_schema',
-        :'is_custom',
       ])
     end
 
@@ -103,6 +93,10 @@ module MergeTicketingClient
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
+      end
+
       if attributes.key?(:'display_name')
         self.display_name = attributes[:'display_name']
       end
@@ -113,6 +107,10 @@ module MergeTicketingClient
 
       if attributes.key?(:'description')
         self.description = attributes[:'description']
+      end
+
+      if attributes.key?(:'is_custom')
+        self.is_custom = attributes[:'is_custom']
       end
 
       if attributes.key?(:'is_required')
@@ -136,20 +134,6 @@ module MergeTicketingClient
       if attributes.key?(:'item_schema')
         self.item_schema = attributes[:'item_schema']
       end
-
-      if attributes.key?(:'is_custom')
-        self.is_custom = attributes[:'is_custom']
-      end
-
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
-      end
-
-      if attributes.key?(:'remote_fields')
-        if (value = attributes[:'remote_fields']).is_a?(Array)
-          self.remote_fields = value
-        end
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -170,17 +154,16 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          id == o.id &&
           display_name == o.display_name &&
           remote_key_name == o.remote_key_name &&
           description == o.description &&
+          is_custom == o.is_custom &&
           is_required == o.is_required &&
           field_type == o.field_type &&
           field_format == o.field_format &&
           field_choices == o.field_choices &&
-          item_schema == o.item_schema &&
-          is_custom == o.is_custom &&
-          id == o.id &&
-          remote_fields == o.remote_fields
+          item_schema == o.item_schema
     end
 
     # @see the `==` method
@@ -192,7 +175,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [display_name, remote_key_name, description, is_required, field_type, field_format, field_choices, item_schema, is_custom, id, remote_fields].hash
+      [id, display_name, remote_key_name, description, is_custom, is_required, field_type, field_format, field_choices, item_schema].hash
     end
 
     # Builds the object from hash
