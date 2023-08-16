@@ -15,15 +15,15 @@ require 'time'
 
 module MergeTicketingClient
   class RemoteField
-    attr_accessor :value
-
     attr_accessor :remote_field_class
+
+    attr_accessor :value
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'value' => :'value',
-        :'remote_field_class' => :'remote_field_class'
+        :'remote_field_class' => :'remote_field_class',
+        :'value' => :'value'
       }
     end
 
@@ -35,16 +35,14 @@ module MergeTicketingClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'value' => :'Hash<String, Object>',
-        :'remote_field_class' => :'String'
+        :'remote_field_class' => :'RemoteFieldClass',
+        :'value' => :'Hash<String, Object>'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'value',
-        :'remote_field_class'
       ])
     end
 
@@ -63,14 +61,14 @@ module MergeTicketingClient
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'remote_field_class')
+        self.remote_field_class = attributes[:'remote_field_class']
+      end
+
       if attributes.key?(:'value')
         if (value = attributes[:'value']).is_a?(Hash)
           self.value = value
         end
-      end
-
-      if attributes.key?(:'remote_field_class')
-        self.remote_field_class = attributes[:'remote_field_class']
       end
     end
 
@@ -78,12 +76,17 @@ module MergeTicketingClient
     # @return Array for valid properties with the reasons
     def list_invalid_properties
       invalid_properties = Array.new
+      if @remote_field_class.nil?
+        invalid_properties.push('invalid value for "remote_field_class", remote_field_class cannot be nil.')
+      end
+
       invalid_properties
     end
 
     # Check to see if the all the properties in the model are valid
     # @return true if the model is valid
     def valid?
+      return false if @remote_field_class.nil?
       true
     end
 
@@ -92,8 +95,8 @@ module MergeTicketingClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          value == o.value &&
-          remote_field_class == o.remote_field_class
+          remote_field_class == o.remote_field_class &&
+          value == o.value
     end
 
     # @see the `==` method
@@ -105,7 +108,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [value, remote_field_class].hash
+      [remote_field_class, value].hash
     end
 
     # Builds the object from hash

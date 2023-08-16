@@ -2,14 +2,14 @@
 
 ## Properties
 
-| Name                    | Type              | Description                                                                                                                                 | Notes                |
-| ----------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| **condition_schema_id** | **String**        | The ID indicating which condition schema to use for a specific condition.                                                                   |                      |
-| **common_model**        | **String**        | The common model for a specific condition.                                                                                                  | [optional][readonly] |
-| **native_name**         | **String**        | User-facing _native condition_ name. e.g. \&quot;Skip Manager\&quot;.                                                                       |                      |
-| **operator**            | **String**        | The operator for a specific condition.                                                                                                      |                      |
-| **value**               | [**Object**](.md) | The value for a condition.                                                                                                                  | [optional][readonly] |
-| **field_name**          | **String**        | The name of the field on the common model that this condition corresponds to, if they conceptually match. e.g. \&quot;location_type\&quot;. |                      |
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **condition_schema_id** | **String** | The ID indicating which condition schema to use for a specific condition. |  |
+| **common_model** | **String** | The common model for a specific condition. | [optional][readonly] |
+| **native_name** | **String** | User-facing *native condition* name. e.g. \&quot;Skip Manager\&quot;. |  |
+| **operator** | **String** | The operator for a specific condition. |  |
+| **value** | [**AnyType**](.md) | The value for a condition. | [optional][readonly] |
+| **field_name** | **String** | The name of the field on the common model that this condition corresponds to, if they conceptually match. e.g. \&quot;location_type\&quot;. |  |
 
 ## Example
 
@@ -25,3 +25,4 @@ instance = MergeTicketingClient::LinkedAccountCondition.new(
   field_name: null
 )
 ```
+

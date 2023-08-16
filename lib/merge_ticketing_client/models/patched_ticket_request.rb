@@ -27,14 +27,11 @@ module MergeTicketingClient
     # The ticket's due date.
     attr_accessor :due_date
 
-    # The current status of the ticket.
+    # The current status of the ticket.  * `OPEN` - OPEN * `CLOSED` - CLOSED * `IN_PROGRESS` - IN_PROGRESS * `ON_HOLD` - ON_HOLD
     attr_accessor :status
 
     # The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
     attr_accessor :description
-
-    # The project the ticket belongs to.
-    attr_accessor :project
 
     attr_accessor :collections
 
@@ -58,12 +55,14 @@ module MergeTicketingClient
     # The 3rd party url of the Ticket.
     attr_accessor :ticket_url
 
-    # The priority or urgency of the Ticket.
+    # The priority or urgency of the Ticket.  * `URGENT` - URGENT * `HIGH` - HIGH * `NORMAL` - NORMAL * `LOW` - LOW
     attr_accessor :priority
 
     attr_accessor :integration_params
 
     attr_accessor :linked_account_params
+
+    attr_accessor :remote_fields
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -74,7 +73,6 @@ module MergeTicketingClient
         :'due_date' => :'due_date',
         :'status' => :'status',
         :'description' => :'description',
-        :'project' => :'project',
         :'collections' => :'collections',
         :'ticket_type' => :'ticket_type',
         :'account' => :'account',
@@ -85,7 +83,8 @@ module MergeTicketingClient
         :'ticket_url' => :'ticket_url',
         :'priority' => :'priority',
         :'integration_params' => :'integration_params',
-        :'linked_account_params' => :'linked_account_params'
+        :'linked_account_params' => :'linked_account_params',
+        :'remote_fields' => :'remote_fields'
       }
     end
 
@@ -103,7 +102,6 @@ module MergeTicketingClient
         :'due_date' => :'Time',
         :'status' => :'TicketStatusEnum',
         :'description' => :'String',
-        :'project' => :'String',
         :'collections' => :'Array<String>',
         :'ticket_type' => :'String',
         :'account' => :'String',
@@ -114,7 +112,8 @@ module MergeTicketingClient
         :'ticket_url' => :'String',
         :'priority' => :'PriorityEnum',
         :'integration_params' => :'Hash<String, Object>',
-        :'linked_account_params' => :'Hash<String, Object>'
+        :'linked_account_params' => :'Hash<String, Object>',
+        :'remote_fields' => :'Array<RemoteFieldRequest>'
       }
     end
 
@@ -126,7 +125,6 @@ module MergeTicketingClient
         :'due_date',
         :'status',
         :'description',
-        :'project',
         :'ticket_type',
         :'account',
         :'contact',
@@ -135,7 +133,7 @@ module MergeTicketingClient
         :'ticket_url',
         :'priority',
         :'integration_params',
-        :'linked_account_params'
+        :'linked_account_params',
       ])
     end
 
@@ -178,10 +176,6 @@ module MergeTicketingClient
 
       if attributes.key?(:'description')
         self.description = attributes[:'description']
-      end
-
-      if attributes.key?(:'project')
-        self.project = attributes[:'project']
       end
 
       if attributes.key?(:'collections')
@@ -235,6 +229,12 @@ module MergeTicketingClient
           self.linked_account_params = value
         end
       end
+
+      if attributes.key?(:'remote_fields')
+        if (value = attributes[:'remote_fields']).is_a?(Array)
+          self.remote_fields = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -276,7 +276,6 @@ module MergeTicketingClient
           due_date == o.due_date &&
           status == o.status &&
           description == o.description &&
-          project == o.project &&
           collections == o.collections &&
           ticket_type == o.ticket_type &&
           account == o.account &&
@@ -287,7 +286,8 @@ module MergeTicketingClient
           ticket_url == o.ticket_url &&
           priority == o.priority &&
           integration_params == o.integration_params &&
-          linked_account_params == o.linked_account_params
+          linked_account_params == o.linked_account_params &&
+          remote_fields == o.remote_fields
     end
 
     # @see the `==` method
@@ -299,7 +299,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, assignees, creator, due_date, status, description, project, collections, ticket_type, account, contact, parent_ticket, tags, completed_at, ticket_url, priority, integration_params, linked_account_params].hash
+      [name, assignees, creator, due_date, status, description, collections, ticket_type, account, contact, parent_ticket, tags, completed_at, ticket_url, priority, integration_params, linked_account_params, remote_fields].hash
     end
 
     # Builds the object from hash

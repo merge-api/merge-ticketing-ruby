@@ -21,13 +21,13 @@ module MergeTicketingClient
     # The third-party API ID of the matching object.
     attr_accessor :remote_id
 
-    # The attachment's name.
+    # The attachment's name. It is required to include the file extension in the attachment's name.
     attr_accessor :file_name
 
     # The ticket associated with the attachment.
     attr_accessor :ticket
 
-    # The attachment's url.
+    # The attachment's url. It is required to include the file extension in the file's URL.
     attr_accessor :file_url
 
     # The attachment's file format.
@@ -39,11 +39,14 @@ module MergeTicketingClient
     # When the third party's attachment was created.
     attr_accessor :remote_created_at
 
-    attr_accessor :remote_data
-
     attr_accessor :remote_was_deleted
 
+    # This is the datetime that this object was last updated by Merge
+    attr_accessor :modified_at
+
     attr_accessor :field_mappings
+
+    attr_accessor :remote_data
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -56,9 +59,10 @@ module MergeTicketingClient
         :'content_type' => :'content_type',
         :'uploaded_by' => :'uploaded_by',
         :'remote_created_at' => :'remote_created_at',
-        :'remote_data' => :'remote_data',
         :'remote_was_deleted' => :'remote_was_deleted',
-        :'field_mappings' => :'field_mappings'
+        :'modified_at' => :'modified_at',
+        :'field_mappings' => :'field_mappings',
+        :'remote_data' => :'remote_data'
       }
     end
 
@@ -78,9 +82,10 @@ module MergeTicketingClient
         :'content_type' => :'String',
         :'uploaded_by' => :'String',
         :'remote_created_at' => :'Time',
-        :'remote_data' => :'Array<RemoteData>',
         :'remote_was_deleted' => :'Boolean',
-        :'field_mappings' => :'Hash<String, Object>'
+        :'modified_at' => :'Time',
+        :'field_mappings' => :'Hash<String, Object>',
+        :'remote_data' => :'Array<RemoteData>'
       }
     end
 
@@ -94,8 +99,8 @@ module MergeTicketingClient
         :'content_type',
         :'uploaded_by',
         :'remote_created_at',
-        :'remote_data',
-        :'field_mappings'
+        :'field_mappings',
+        :'remote_data'
       ])
     end
 
@@ -146,19 +151,23 @@ module MergeTicketingClient
         self.remote_created_at = attributes[:'remote_created_at']
       end
 
-      if attributes.key?(:'remote_data')
-        if (value = attributes[:'remote_data']).is_a?(Array)
-          self.remote_data = value
-        end
-      end
-
       if attributes.key?(:'remote_was_deleted')
         self.remote_was_deleted = attributes[:'remote_was_deleted']
+      end
+
+      if attributes.key?(:'modified_at')
+        self.modified_at = attributes[:'modified_at']
       end
 
       if attributes.key?(:'field_mappings')
         if (value = attributes[:'field_mappings']).is_a?(Hash)
           self.field_mappings = value
+        end
+      end
+
+      if attributes.key?(:'remote_data')
+        if (value = attributes[:'remote_data']).is_a?(Array)
+          self.remote_data = value
         end
       end
     end
@@ -189,9 +198,10 @@ module MergeTicketingClient
           content_type == o.content_type &&
           uploaded_by == o.uploaded_by &&
           remote_created_at == o.remote_created_at &&
-          remote_data == o.remote_data &&
           remote_was_deleted == o.remote_was_deleted &&
-          field_mappings == o.field_mappings
+          modified_at == o.modified_at &&
+          field_mappings == o.field_mappings &&
+          remote_data == o.remote_data
     end
 
     # @see the `==` method
@@ -203,7 +213,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, file_name, ticket, file_url, content_type, uploaded_by, remote_created_at, remote_data, remote_was_deleted, field_mappings].hash
+      [id, remote_id, file_name, ticket, file_url, content_type, uploaded_by, remote_created_at, remote_was_deleted, modified_at, field_mappings, remote_data].hash
     end
 
     # Builds the object from hash

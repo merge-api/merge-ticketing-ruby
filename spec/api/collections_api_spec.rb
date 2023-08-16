@@ -36,15 +36,15 @@ describe 'CollectionsApi' do
   # Returns a list of &#x60;Collection&#x60; objects.
   # @param x_account_token Token identifying the end user.
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :collection_type If provided, will only return collections of the given type.
+  # @option opts [String] :collection_type If provided, will only return collections of the given type.  * &#x60;LIST&#x60; - LIST * &#x60;PROJECT&#x60; - PROJECT
   # @option opts [Time] :created_after If provided, will only return objects created after this datetime.
   # @option opts [Time] :created_before If provided, will only return objects created before this datetime.
   # @option opts [String] :cursor The pagination cursor value.
   # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
   # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
-  # @option opts [Time] :modified_after If provided, will only return objects modified after this datetime.
-  # @option opts [Time] :modified_before If provided, will only return objects modified before this datetime.
+  # @option opts [Time] :modified_after If provided, only objects synced by Merge after this date time will be returned.
+  # @option opts [Time] :modified_before If provided, only objects synced by Merge before this date time will be returned.
   # @option opts [Integer] :page_size Number of results to return per page.
   # @option opts [String] :parent_collection_id If provided, will only return collections whose parent collection matches the given id.
   # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
@@ -68,6 +68,23 @@ describe 'CollectionsApi' do
   # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
   # @return [Collection]
   describe 'collections_retrieve test' do
+    it 'should work' do
+      # assertion here. ref: https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
+    end
+  end
+
+  # unit tests for collections_users_list
+  # Returns a list of &#x60;User&#x60; objects.
+  # @param x_account_token Token identifying the end user.
+  # @param parent_id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The pagination cursor value.
+  # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+  # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
+  # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
+  # @option opts [Integer] :page_size Number of results to return per page.
+  # @return [PaginatedUserList]
+  describe 'collections_users_list test' do
     it 'should work' do
       # assertion here. ref: https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
     end

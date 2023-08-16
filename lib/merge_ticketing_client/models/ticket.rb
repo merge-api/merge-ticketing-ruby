@@ -32,14 +32,11 @@ module MergeTicketingClient
     # The ticket's due date.
     attr_accessor :due_date
 
-    # The current status of the ticket.
+    # The current status of the ticket.  * `OPEN` - OPEN * `CLOSED` - CLOSED * `IN_PROGRESS` - IN_PROGRESS * `ON_HOLD` - ON_HOLD
     attr_accessor :status
 
     # The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
     attr_accessor :description
-
-    # The project the ticket belongs to.
-    attr_accessor :project
 
     attr_accessor :collections
 
@@ -68,17 +65,20 @@ module MergeTicketingClient
     # When the ticket was completed.
     attr_accessor :completed_at
 
-    attr_accessor :remote_data
-
     attr_accessor :remote_was_deleted
 
     # The 3rd party url of the Ticket.
     attr_accessor :ticket_url
 
-    # The priority or urgency of the Ticket.
+    # The priority or urgency of the Ticket.  * `URGENT` - URGENT * `HIGH` - HIGH * `NORMAL` - NORMAL * `LOW` - LOW
     attr_accessor :priority
 
+    # This is the datetime that this object was last updated by Merge
+    attr_accessor :modified_at
+
     attr_accessor :field_mappings
+
+    attr_accessor :remote_data
 
     attr_accessor :remote_fields
 
@@ -93,7 +93,6 @@ module MergeTicketingClient
         :'due_date' => :'due_date',
         :'status' => :'status',
         :'description' => :'description',
-        :'project' => :'project',
         :'collections' => :'collections',
         :'ticket_type' => :'ticket_type',
         :'account' => :'account',
@@ -104,11 +103,12 @@ module MergeTicketingClient
         :'remote_created_at' => :'remote_created_at',
         :'remote_updated_at' => :'remote_updated_at',
         :'completed_at' => :'completed_at',
-        :'remote_data' => :'remote_data',
         :'remote_was_deleted' => :'remote_was_deleted',
         :'ticket_url' => :'ticket_url',
         :'priority' => :'priority',
+        :'modified_at' => :'modified_at',
         :'field_mappings' => :'field_mappings',
+        :'remote_data' => :'remote_data',
         :'remote_fields' => :'remote_fields'
       }
     end
@@ -129,7 +129,6 @@ module MergeTicketingClient
         :'due_date' => :'Time',
         :'status' => :'TicketStatusEnum',
         :'description' => :'String',
-        :'project' => :'String',
         :'collections' => :'Array<String>',
         :'ticket_type' => :'String',
         :'account' => :'String',
@@ -140,11 +139,12 @@ module MergeTicketingClient
         :'remote_created_at' => :'Time',
         :'remote_updated_at' => :'Time',
         :'completed_at' => :'Time',
-        :'remote_data' => :'Array<RemoteData>',
         :'remote_was_deleted' => :'Boolean',
         :'ticket_url' => :'String',
         :'priority' => :'PriorityEnum',
+        :'modified_at' => :'Time',
         :'field_mappings' => :'Hash<String, Object>',
+        :'remote_data' => :'Array<RemoteData>',
         :'remote_fields' => :'Array<RemoteField>'
       }
     end
@@ -158,7 +158,6 @@ module MergeTicketingClient
         :'due_date',
         :'status',
         :'description',
-        :'project',
         :'ticket_type',
         :'account',
         :'contact',
@@ -166,10 +165,10 @@ module MergeTicketingClient
         :'remote_created_at',
         :'remote_updated_at',
         :'completed_at',
-        :'remote_data',
         :'ticket_url',
         :'priority',
         :'field_mappings',
+        :'remote_data',
       ])
     end
 
@@ -222,10 +221,6 @@ module MergeTicketingClient
         self.description = attributes[:'description']
       end
 
-      if attributes.key?(:'project')
-        self.project = attributes[:'project']
-      end
-
       if attributes.key?(:'collections')
         if (value = attributes[:'collections']).is_a?(Array)
           self.collections = value
@@ -272,12 +267,6 @@ module MergeTicketingClient
         self.completed_at = attributes[:'completed_at']
       end
 
-      if attributes.key?(:'remote_data')
-        if (value = attributes[:'remote_data']).is_a?(Array)
-          self.remote_data = value
-        end
-      end
-
       if attributes.key?(:'remote_was_deleted')
         self.remote_was_deleted = attributes[:'remote_was_deleted']
       end
@@ -290,9 +279,19 @@ module MergeTicketingClient
         self.priority = attributes[:'priority']
       end
 
+      if attributes.key?(:'modified_at')
+        self.modified_at = attributes[:'modified_at']
+      end
+
       if attributes.key?(:'field_mappings')
         if (value = attributes[:'field_mappings']).is_a?(Hash)
           self.field_mappings = value
+        end
+      end
+
+      if attributes.key?(:'remote_data')
+        if (value = attributes[:'remote_data']).is_a?(Array)
+          self.remote_data = value
         end
       end
 
@@ -344,7 +343,6 @@ module MergeTicketingClient
           due_date == o.due_date &&
           status == o.status &&
           description == o.description &&
-          project == o.project &&
           collections == o.collections &&
           ticket_type == o.ticket_type &&
           account == o.account &&
@@ -355,11 +353,12 @@ module MergeTicketingClient
           remote_created_at == o.remote_created_at &&
           remote_updated_at == o.remote_updated_at &&
           completed_at == o.completed_at &&
-          remote_data == o.remote_data &&
           remote_was_deleted == o.remote_was_deleted &&
           ticket_url == o.ticket_url &&
           priority == o.priority &&
+          modified_at == o.modified_at &&
           field_mappings == o.field_mappings &&
+          remote_data == o.remote_data &&
           remote_fields == o.remote_fields
     end
 
@@ -372,7 +371,7 @@ module MergeTicketingClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, remote_id, name, assignees, creator, due_date, status, description, project, collections, ticket_type, account, contact, parent_ticket, attachments, tags, remote_created_at, remote_updated_at, completed_at, remote_data, remote_was_deleted, ticket_url, priority, field_mappings, remote_fields].hash
+      [id, remote_id, name, assignees, creator, due_date, status, description, collections, ticket_type, account, contact, parent_ticket, attachments, tags, remote_created_at, remote_updated_at, completed_at, remote_was_deleted, ticket_url, priority, modified_at, field_mappings, remote_data, remote_fields].hash
     end
 
     # Builds the object from hash

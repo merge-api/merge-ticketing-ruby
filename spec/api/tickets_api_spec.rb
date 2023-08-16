@@ -81,11 +81,12 @@ describe 'TicketsApi' do
   # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
   # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
-  # @option opts [Time] :modified_after If provided, will only return objects modified after this datetime.
-  # @option opts [Time] :modified_before If provided, will only return objects modified before this datetime.
+  # @option opts [Boolean] :include_remote_fields Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format.
+  # @option opts [Time] :modified_after If provided, only objects synced by Merge after this date time will be returned.
+  # @option opts [Time] :modified_before If provided, only objects synced by Merge before this date time will be returned.
   # @option opts [Integer] :page_size Number of results to return per page.
   # @option opts [String] :parent_ticket_id If provided, will only return sub tickets of the parent_ticket_id.
-  # @option opts [String] :priority If provided, will only return tickets of this priority.
+  # @option opts [String] :priority If provided, will only return tickets of this priority.  * &#x60;URGENT&#x60; - URGENT * &#x60;HIGH&#x60; - HIGH * &#x60;NORMAL&#x60; - NORMAL * &#x60;LOW&#x60; - LOW
   # @option opts [String] :project_id If provided, will only return tickets for this project.
   # @option opts [Time] :remote_created_after If provided, will only return tickets created in the third party platform after this datetime.
   # @option opts [Time] :remote_created_before If provided, will only return tickets created in the third party platform before this datetime.
@@ -94,7 +95,7 @@ describe 'TicketsApi' do
   # @option opts [Time] :remote_updated_after If provided, will only return tickets updated in the third party platform after this datetime.
   # @option opts [Time] :remote_updated_before If provided, will only return tickets updated in the third party platform before this datetime.
   # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
-  # @option opts [String] :status If provided, will only return tickets of this status.
+  # @option opts [String] :status If provided, will only return tickets of this status.  * &#x60;OPEN&#x60; - OPEN * &#x60;CLOSED&#x60; - CLOSED * &#x60;IN_PROGRESS&#x60; - IN_PROGRESS * &#x60;ON_HOLD&#x60; - ON_HOLD
   # @option opts [String] :tags If provided, will only return tickets matching the tags; multiple tags can be separated by commas.
   # @option opts [String] :ticket_type If provided, will only return tickets of this type.
   # @return [PaginatedTicketList]
@@ -142,6 +143,21 @@ describe 'TicketsApi' do
     end
   end
 
+  # unit tests for tickets_remote_field_classes_list
+  # Returns a list of &#x60;RemoteFieldClass&#x60; objects.
+  # @param x_account_token Token identifying the end user.
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The pagination cursor value.
+  # @option opts [Boolean] :include_deleted_data Whether to include data that was marked as deleted by third party webhooks.
+  # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
+  # @option opts [Integer] :page_size Number of results to return per page.
+  # @return [PaginatedRemoteFieldClassList]
+  describe 'tickets_remote_field_classes_list test' do
+    it 'should work' do
+      # assertion here. ref: https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
+    end
+  end
+
   # unit tests for tickets_retrieve
   # Returns a &#x60;Ticket&#x60; object with the given &#x60;id&#x60;.
   # @param x_account_token Token identifying the end user.
@@ -149,6 +165,7 @@ describe 'TicketsApi' do
   # @param [Hash] opts the optional parameters
   # @option opts [String] :expand Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   # @option opts [Boolean] :include_remote_data Whether to include the original data Merge fetched from the third-party to produce these models.
+  # @option opts [Boolean] :include_remote_fields Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format.
   # @option opts [String] :remote_fields Deprecated. Use show_enum_origins.
   # @option opts [String] :show_enum_origins Which fields should be returned in non-normalized form.
   # @return [Ticket]

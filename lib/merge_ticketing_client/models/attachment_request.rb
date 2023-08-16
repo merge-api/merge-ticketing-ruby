@@ -16,13 +16,13 @@ require 'time'
 module MergeTicketingClient
   # # The Attachment Object ### Description The `Attachment` object is used to represent an attachment for a ticket.  ### Usage Example TODO
   class AttachmentRequest
-    # The attachment's name.
+    # The attachment's name. It is required to include the file extension in the attachment's name.
     attr_accessor :file_name
 
     # The ticket associated with the attachment.
     attr_accessor :ticket
 
-    # The attachment's url.
+    # The attachment's url. It is required to include the file extension in the file's URL.
     attr_accessor :file_url
 
     # The attachment's file format.

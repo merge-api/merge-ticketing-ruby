@@ -17,6 +17,7 @@ module MergeTicketingClient
   class Issue
     attr_accessor :id
 
+    # Status of the issue. Options: ('ONGOING', 'RESOLVED')  * `ONGOING` - ONGOING * `RESOLVED` - RESOLVED
     attr_accessor :status
 
     attr_accessor :error_description
@@ -60,7 +61,7 @@ module MergeTicketingClient
         :'first_incident_time' => :'Time',
         :'last_incident_time' => :'Time',
         :'is_muted' => :'Boolean',
-        :'error_details' => :'Hash<String, Object>'
+        :'error_details' => :'Array<String>'
       }
     end
 
@@ -118,7 +119,7 @@ module MergeTicketingClient
       end
 
       if attributes.key?(:'error_details')
-        if (value = attributes[:'error_details']).is_a?(Hash)
+        if (value = attributes[:'error_details']).is_a?(Array)
           self.error_details = value
         end
       end

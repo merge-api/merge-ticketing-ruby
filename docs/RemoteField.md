@@ -2,10 +2,10 @@
 
 ## Properties
 
-| Name                   | Type                                        | Description | Notes      |
-| ---------------------- | ------------------------------------------- | ----------- | ---------- |
-| **value**              | [**Hash&lt;String, Object&gt;**](Object.md) |             | [optional] |
-| **remote_field_class** | **String**                                  |             | [optional] |
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **remote_field_class** | [**RemoteFieldClass**](RemoteFieldClass.md) |  |  |
+| **value** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional] |
 
 ## Example
 
@@ -13,7 +13,8 @@
 require 'merge_ticketing_client'
 
 instance = MergeTicketingClient::RemoteField.new(
-  value: null,
-  remote_field_class: null
+  remote_field_class: null,
+  value: string
 )
 ```
+

@@ -40,7 +40,7 @@ x_account_token = 'x_account_token_example' # String | Token identifying the end
 parent_id = TODO # String | 
 opts = {
   cursor: 'cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw', # String | The pagination cursor value.
-  expand: 'teams', # String | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
+  expand: 'roles', # String | Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.
   include_deleted_data: true, # Boolean | Whether to include data that was marked as deleted by third party webhooks.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
   page_size: 56 # Integer | Number of results to return per page.
@@ -217,11 +217,11 @@ opts = {
   include_deleted_data: true, # Boolean | Whether to include data that was marked as deleted by third party webhooks.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
   include_remote_fields: true, # Boolean | Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format.
-  modified_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects modified after this datetime.
-  modified_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return objects modified before this datetime.
+  modified_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, only objects synced by Merge after this date time will be returned.
+  modified_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, only objects synced by Merge before this date time will be returned.
   page_size: 56, # Integer | Number of results to return per page.
   parent_ticket_id: 'parent_ticket_id_example', # String | If provided, will only return sub tickets of the parent_ticket_id.
-  priority: 'HIGH', # String | If provided, will only return tickets of this priority.
+  priority: 'HIGH', # String | If provided, will only return tickets of this priority.  * `URGENT` - URGENT * `HIGH` - HIGH * `NORMAL` - NORMAL * `LOW` - LOW
   project_id: 'project_id_example', # String | If provided, will only return tickets for this project.
   remote_created_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets created in the third party platform after this datetime.
   remote_created_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets created in the third party platform before this datetime.
@@ -230,7 +230,7 @@ opts = {
   remote_updated_after: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets updated in the third party platform after this datetime.
   remote_updated_before: Time.parse('2013-10-20T19:20:30+01:00'), # Time | If provided, will only return tickets updated in the third party platform before this datetime.
   show_enum_origins: 'priority', # String | Which fields should be returned in non-normalized form.
-  status: 'CLOSED', # String | If provided, will only return tickets of this status.
+  status: 'CLOSED', # String | If provided, will only return tickets of this status.  * `OPEN` - OPEN * `CLOSED` - CLOSED * `IN_PROGRESS` - IN_PROGRESS * `ON_HOLD` - ON_HOLD
   tags: 'tags_example', # String | If provided, will only return tickets matching the tags; multiple tags can be separated by commas.
   ticket_type: 'ticket_type_example' # String | If provided, will only return tickets of this type.
 }
@@ -282,11 +282,11 @@ end
 | **include_deleted_data** | **Boolean** | Whether to include data that was marked as deleted by third party webhooks. | [optional] |
 | **include_remote_data** | **Boolean** | Whether to include the original data Merge fetched from the third-party to produce these models. | [optional] |
 | **include_remote_fields** | **Boolean** | Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format. | [optional] |
-| **modified_after** | **Time** | If provided, will only return objects modified after this datetime. | [optional] |
-| **modified_before** | **Time** | If provided, will only return objects modified before this datetime. | [optional] |
+| **modified_after** | **Time** | If provided, only objects synced by Merge after this date time will be returned. | [optional] |
+| **modified_before** | **Time** | If provided, only objects synced by Merge before this date time will be returned. | [optional] |
 | **page_size** | **Integer** | Number of results to return per page. | [optional] |
 | **parent_ticket_id** | **String** | If provided, will only return sub tickets of the parent_ticket_id. | [optional] |
-| **priority** | **String** | If provided, will only return tickets of this priority. | [optional] |
+| **priority** | **String** | If provided, will only return tickets of this priority.  * &#x60;URGENT&#x60; - URGENT * &#x60;HIGH&#x60; - HIGH * &#x60;NORMAL&#x60; - NORMAL * &#x60;LOW&#x60; - LOW | [optional] |
 | **project_id** | **String** | If provided, will only return tickets for this project. | [optional] |
 | **remote_created_after** | **Time** | If provided, will only return tickets created in the third party platform after this datetime. | [optional] |
 | **remote_created_before** | **Time** | If provided, will only return tickets created in the third party platform before this datetime. | [optional] |
@@ -295,7 +295,7 @@ end
 | **remote_updated_after** | **Time** | If provided, will only return tickets updated in the third party platform after this datetime. | [optional] |
 | **remote_updated_before** | **Time** | If provided, will only return tickets updated in the third party platform before this datetime. | [optional] |
 | **show_enum_origins** | **String** | Which fields should be returned in non-normalized form. | [optional] |
-| **status** | **String** | If provided, will only return tickets of this status. | [optional] |
+| **status** | **String** | If provided, will only return tickets of this status.  * &#x60;OPEN&#x60; - OPEN * &#x60;CLOSED&#x60; - CLOSED * &#x60;IN_PROGRESS&#x60; - IN_PROGRESS * &#x60;ON_HOLD&#x60; - ON_HOLD | [optional] |
 | **tags** | **String** | If provided, will only return tickets matching the tags; multiple tags can be separated by commas. | [optional] |
 | **ticket_type** | **String** | If provided, will only return tickets of this type. | [optional] |
 
@@ -565,7 +565,6 @@ opts = {
   cursor: 'cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw', # String | The pagination cursor value.
   include_deleted_data: true, # Boolean | Whether to include data that was marked as deleted by third party webhooks.
   include_remote_data: true, # Boolean | Whether to include the original data Merge fetched from the third-party to produce these models.
-  include_remote_fields: true, # Boolean | Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format.
   page_size: 56 # Integer | Number of results to return per page.
 }
 
@@ -604,7 +603,6 @@ end
 | **cursor** | **String** | The pagination cursor value. | [optional] |
 | **include_deleted_data** | **Boolean** | Whether to include data that was marked as deleted by third party webhooks. | [optional] |
 | **include_remote_data** | **Boolean** | Whether to include the original data Merge fetched from the third-party to produce these models. | [optional] |
-| **include_remote_fields** | **Boolean** | Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format. | [optional] |
 | **page_size** | **Integer** | Number of results to return per page. | [optional] |
 
 ### Return type

@@ -2,15 +2,15 @@
 
 ## Properties
 
-| Name                      | Type                                        | Description                                | Notes      |
-| ------------------------- | ------------------------------------------- | ------------------------------------------ | ---------- |
-| **file_name**             | **String**                                  | The attachment&#39;s name.                 | [optional] |
-| **ticket**                | **String**                                  | The ticket associated with the attachment. | [optional] |
-| **file_url**              | **String**                                  | The attachment&#39;s url.                  | [optional] |
-| **content_type**          | **String**                                  | The attachment&#39;s file format.          | [optional] |
-| **uploaded_by**           | **String**                                  | The user who uploaded the attachment.      | [optional] |
-| **integration_params**    | [**Hash&lt;String, Object&gt;**](Object.md) |                                            | [optional] |
-| **linked_account_params** | [**Hash&lt;String, Object&gt;**](Object.md) |                                            | [optional] |
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **file_name** | **String** | The attachment&#39;s name. It is required to include the file extension in the attachment&#39;s name. | [optional] |
+| **ticket** | **String** | The ticket associated with the attachment. | [optional] |
+| **file_url** | **String** | The attachment&#39;s url. It is required to include the file extension in the file&#39;s URL. | [optional] |
+| **content_type** | **String** | The attachment&#39;s file format. | [optional] |
+| **uploaded_by** | **String** | The user who uploaded the attachment. | [optional] |
+| **integration_params** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional] |
+| **linked_account_params** | [**Hash&lt;String, AnyType&gt;**](AnyType.md) |  | [optional] |
 
 ## Example
 
@@ -27,3 +27,4 @@ instance = MergeTicketingClient::AttachmentRequest.new(
   linked_account_params: {&quot;unique_linked_account_field&quot;:&quot;unique_linked_account_field_value&quot;}
 )
 ```
+
